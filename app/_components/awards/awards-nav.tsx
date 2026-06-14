@@ -46,7 +46,7 @@ export default function AwardsNav({ activeSlug, onNavClick }: AwardsNavProps) {
               background: "transparent",
               cursor: "pointer",
             }}
-            aria-current={isActive ? true : undefined}
+            aria-current={isActive ? "location" : undefined}
           >
             <span className="flex items-center" style={{ gap: "4px" }}>
               {/* Target icon */}

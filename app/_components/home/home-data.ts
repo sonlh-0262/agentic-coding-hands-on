@@ -6,7 +6,6 @@
 export interface NavLink {
   label: string;
   href: string;
-  active?: boolean;
 }
 
 // Active state is derived from the current pathname in the header/footer
