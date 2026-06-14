@@ -9,15 +9,17 @@ export interface NavLink {
   active?: boolean;
 }
 
+// Active state is derived from the current pathname in the header/footer
+// components (route-aware), not hardcoded here.
 export const NAV_LINKS: NavLink[] = [
-  { label: "About SAA 2025", href: "/", active: true },
+  { label: "About SAA 2025", href: "/" },
   { label: "Awards Information", href: "/he-thong-giai" },
   { label: "Sun* Kudos", href: "/kudos" },
 ];
 
 export const FOOTER_NAV_LINKS: NavLink[] = [
   { label: "About SAA 2025", href: "/" },
-  { label: "Awards Information", href: "/he-thong-giai", active: true },
+  { label: "Awards Information", href: "/he-thong-giai" },
   { label: "Sun* Kudos", href: "/kudos" },
   { label: "Tiêu chuẩn chung", href: "/criteria" },
 ];

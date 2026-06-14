@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import LanguageSwitcher from "./language-switcher";
 import NotificationButton from "./notification-button";
 import AccountMenu from "./account-menu";
@@ -16,6 +19,7 @@ interface SiteHeaderProps {
  * Semi-transparent dark background: rgba(16, 20, 23, 0.80).
  */
 export default function SiteHeader({ user }: SiteHeaderProps) {
+  const pathname = usePathname();
   return (
     <header
       className="fixed top-0 left-0 w-full z-50 flex flex-row items-center justify-between"
@@ -55,27 +59,30 @@ export default function SiteHeader({ user }: SiteHeaderProps) {
           style={{ gap: "24px" }}
           aria-label="Main navigation"
         >
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="flex items-center rounded-[4px] text-sm font-bold leading-5 tracking-[0.1px] transition-colors duration-200"
-              style={{
-                fontFamily: "var(--font-montserrat), sans-serif",
-                padding: "16px",
-                color: link.active ? "rgba(255, 234, 158, 1)" : "#fff",
-                borderBottom: link.active
-                  ? "1px solid rgba(255, 234, 158, 1)"
-                  : "none",
-                textShadow: link.active
-                  ? "0 4px 4px rgba(0,0,0,0.25), 0 0 6px #FAE287"
-                  : "none",
-              }}
-              aria-current={link.active ? "page" : undefined}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="flex items-center rounded-[4px] text-sm font-bold leading-5 tracking-[0.1px] transition-colors duration-200"
+                style={{
+                  fontFamily: "var(--font-montserrat), sans-serif",
+                  padding: "16px",
+                  color: isActive ? "rgba(255, 234, 158, 1)" : "#fff",
+                  borderBottom: isActive
+                    ? "1px solid rgba(255, 234, 158, 1)"
+                    : "none",
+                  textShadow: isActive
+                    ? "0 4px 4px rgba(0,0,0,0.25), 0 0 6px #FAE287"
+                    : "none",
+                }}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
 
