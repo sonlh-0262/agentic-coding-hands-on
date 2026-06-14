@@ -1,35 +1,41 @@
-import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/supabase/auth";
+import { resolveEventDatetime } from "@/lib/event/countdown";
+import HomeClient, { type HomeUser } from "@/app/_components/home/home-client";
 
-// Auth state is per-request; never serve a cached/prerendered redirect.
+// Auth state is per-request; never serve a cached/prerendered version.
 export const dynamic = "force-dynamic";
 
 /**
- * Protected home (post-login landing). Authoritative auth check; the proxy
- * also redirects unauthenticated users to /login optimistically.
+ * Homepage SAA (`/`) — public + auth-aware landing page.
+ *
+ * Renders for everyone; user-specific controls (notification bell, account
+ * menu) are layered in by the client when a session exists. The proxy keeps
+ * `/` public; this server component resolves the auth state + event datetime
+ * and hands them to the presentational client tree.
  */
 export default async function Home() {
   const user = await getCurrentUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
-  const name =
-    (user.user_metadata?.full_name as string | undefined) ?? user.email ?? "bạn";
-
-  return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-6 bg-[#00101A] px-6 text-center text-white">
-      <h1 className="text-3xl font-bold sm:text-4xl">Chào mừng, {name}!</h1>
-      <p className="text-white/70">Bạn đã đăng nhập vào SAA 2025.</p>
-      <form action="/auth/signout" method="post">
-        <button
-          type="submit"
-          className="rounded-lg bg-[rgba(255,234,158,1)] px-6 py-3 font-bold text-[#00101A] transition-all hover:shadow-lg hover:brightness-105"
-        >
-          Đăng xuất
-        </button>
-      </form>
-    </main>
+  const eventDatetime = resolveEventDatetime(
+    process.env.NEXT_PUBLIC_EVENT_DATETIME,
   );
+
+  const homeUser: HomeUser | null = user
+    ? {
+        name:
+          (user.user_metadata?.full_name as string | undefined) ??
+          (user.user_metadata?.name as string | undefined) ??
+          user.email ??
+          "bạn",
+        email: user.email ?? "",
+        avatarUrl:
+          (user.user_metadata?.avatar_url as string | undefined) ??
+          (user.user_metadata?.picture as string | undefined),
+        // Admin status MUST come from server-controlled app_metadata only.
+        // user_metadata is writable by the user via updateUser(), so trusting
+        // it would let anyone self-promote to admin.
+        isAdmin: (user.app_metadata?.role as string | undefined) === "admin",
+      }
+    : null;
+
+  return <HomeClient user={homeUser} eventDatetime={eventDatetime} />;
 }

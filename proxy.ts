@@ -6,13 +6,25 @@ import { updateSession } from "@/lib/supabase/proxy-session";
  *
  * Responsibilities:
  *  - Refresh the Supabase auth session (rotate cookies) on every request.
- *  - Optimistic route protection:
- *      unauthenticated + protected route  -> redirect to /login
+ *  - Optimistic route protection (secure-by-default):
+ *      unauthenticated + non-public route -> redirect to /login
  *      authenticated   + /login           -> redirect to /
+ *  - Public routes (homepage, login) are viewable without auth.
  *  - `/auth/*` (OAuth callback, sign-out) always passes through.
  *
  * Page-level `getUser()` checks remain the authoritative security layer.
  */
+
+/**
+ * Routes viewable without authentication. The homepage is public + auth-aware:
+ * it renders for everyone and layers in user controls only when logged in.
+ * The award/kudos/criteria routes are public-facing nav targets (not built
+ * yet — they 404); listing them avoids bouncing logged-out visitors to /login.
+ * Account-scoped routes (e.g. /profile, /admin) are intentionally omitted and
+ * stay protected by default.
+ */
+const PUBLIC_PATHS = ["/", "/login", "/awards", "/kudos", "/criteria"];
+
 export async function proxy(request: NextRequest) {
   const { response, user } = await updateSession(request);
   const path = request.nextUrl.pathname;
@@ -29,8 +41,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Unauthenticated users may only see /login.
-  if (!user && path !== "/login") {
+  // Unauthenticated users may only see public routes.
+  if (!user && !PUBLIC_PATHS.includes(path)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
