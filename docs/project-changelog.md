@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### 2026-06-15 — Award System page (`/he-thong-giai`, auth-protected)
+
+**What shipped:**
+- Protected route `/he-thong-giai` — "Hệ thống giải thưởng SAA 2025" page, auth-gated (proxy + page-level redirect to `/login`)
+- Hero/keyvisual section, sticky scroll-spy nav with 6 award-category links, 6 award detail sections, Sun* Kudos banner (reused from homepage)
+- 8 new files under `app/_components/awards/` including `awards-data.ts` (award category data)
+- `proxy.ts` updated: `/awards` removed from `PUBLIC_PATHS`; `/he-thong-giai` added as protected route
+
+**Navigation changes:**
+- All internal links that previously pointed to `/awards` (in `home-data.ts`, `award-card.tsx`, `hero-section.tsx`) updated to `/he-thong-giai`
+
+**Resolves:** "Known nav placeholders" from 2026-06-14 entry — `/awards` link is now live (redirects via nav repoint to `/he-thong-giai`)
+
+---
+
 ### 2026-06-14 — Homepage SAA (public, auth-aware)
 
 **Branch:** feat/login-supabase-oauth
@@ -22,7 +37,8 @@
 - `NEXT_PUBLIC_EVENT_DATETIME` — ISO datetime string for countdown target (required for countdown tile)
 
 **Known nav placeholders:**
-- `/awards` and `/kudos` linked in nav but not yet built
+- `/kudos` linked in nav but not yet built
+- `/awards` — resolved in 2026-06-15 entry (repointed to `/he-thong-giai`)
 
 ---
 

@@ -15,7 +15,7 @@ interface AwardCardProps {
 export default function AwardCard({ award }: AwardCardProps) {
   return (
     <Link
-      href={`/awards#${award.slug}`}
+      href={`/he-thong-giai#${award.slug}`}
       className="group flex flex-col no-underline"
       style={{ gap: "24px", width: "336px" }}
       aria-label={`${award.title} — Chi tiết`}

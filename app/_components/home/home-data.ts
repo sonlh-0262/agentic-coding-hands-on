@@ -11,13 +11,13 @@ export interface NavLink {
 
 export const NAV_LINKS: NavLink[] = [
   { label: "About SAA 2025", href: "/", active: true },
-  { label: "Awards Information", href: "/awards" },
+  { label: "Awards Information", href: "/he-thong-giai" },
   { label: "Sun* Kudos", href: "/kudos" },
 ];
 
 export const FOOTER_NAV_LINKS: NavLink[] = [
   { label: "About SAA 2025", href: "/" },
-  { label: "Awards Information", href: "/awards", active: true },
+  { label: "Awards Information", href: "/he-thong-giai", active: true },
   { label: "Sun* Kudos", href: "/kudos" },
   { label: "Tiêu chuẩn chung", href: "/criteria" },
 ];
