@@ -95,9 +95,9 @@ export const ROOT_FURTHER_PARAGRAPHS = [
 export const ENGLISH_PROVERB =
   '"A tree with deep roots fears no storm"\n (Cây sâu bén rễ, bão giông chẳng nề - Ngạn ngữ Anh)';
 
+// Date/time are derived from NEXT_PUBLIC_EVENT_DATETIME (see hero-section),
+// so only the non-env fields live here.
 export const EVENT_INFO = {
-  date: "26/12/2025",
-  time: "18h30",
   venue: "Âu Cơ Art Center",
   livestream: "Tường thuật trực tiếp qua sóng Livestream",
 };

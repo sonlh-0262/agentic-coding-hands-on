@@ -51,3 +51,40 @@ export function getRemaining(target: Date, now: Date = new Date()): Remaining {
 export function padded(value: number): string {
   return String(Math.max(0, value)).padStart(2, "0");
 }
+
+export interface FormattedEvent {
+  /** e.g. "16/06/2026" */
+  date: string;
+  /** e.g. "10h00" */
+  time: string;
+}
+
+/**
+ * Formats an ISO-8601 event datetime for display, so the on-screen date/time
+ * stays in sync with the countdown (single source of truth = the env var).
+ * Formatting is pinned to a fixed time zone to avoid server/client mismatch.
+ */
+export function formatEventDateTime(
+  iso: string,
+  timeZone = "Asia/Ho_Chi_Minh",
+): FormattedEvent {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) {
+    return { date: "", time: "" };
+  }
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone,
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(d);
+  const get = (type: string) =>
+    parts.find((p) => p.type === type)?.value ?? "";
+  return {
+    date: `${get("day")}/${get("month")}/${get("year")}`,
+    time: `${get("hour")}h${get("minute")}`,
+  };
+}

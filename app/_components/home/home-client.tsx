@@ -58,7 +58,7 @@ export default function HomeClient({ user, eventDatetime }: HomeClientProps) {
       <SiteHeader user={user} />
 
       {/* Hero — full-viewport section with keyvisual bg */}
-      <HeroSection remaining={remaining} />
+      <HeroSection remaining={remaining} eventDatetime={eventDatetime} />
 
       {/* Root Further section */}
       <div style={{ padding: "120px 0 0 0" }}>

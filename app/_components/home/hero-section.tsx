@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import CountdownTimer from "./countdown-timer";
-import type { Remaining } from "@/lib/event/countdown";
+import { formatEventDateTime, type Remaining } from "@/lib/event/countdown";
 import { EVENT_INFO } from "./home-data";
 
 interface HeroSectionProps {
   remaining: Remaining;
+  /** ISO-8601 event datetime — single source of truth for the displayed date/time. */
+  eventDatetime: string;
 }
 
 /**
@@ -13,7 +15,13 @@ interface HeroSectionProps {
  * Background: /home/keyvisual-bg.png.
  * Contains: Root Further logo, "Coming soon" label, countdown, event info, CTA buttons.
  */
-export default function HeroSection({ remaining }: HeroSectionProps) {
+export default function HeroSection({
+  remaining,
+  eventDatetime,
+}: HeroSectionProps) {
+  // Derive the displayed date/time from the same env-driven value as the
+  // countdown so they never diverge.
+  const { date, time } = formatEventDateTime(eventDatetime);
   return (
     <section
       className="relative w-full overflow-hidden"
@@ -103,7 +111,7 @@ export default function HeroSection({ remaining }: HeroSectionProps) {
                   color: "rgba(255, 234, 158, 1)",
                 }}
               >
-                {EVENT_INFO.date}
+                {time} - {date}
               </span>
             </div>
             {/* Venue info */}

@@ -10,8 +10,31 @@ import {
   resolveEventDatetime,
   getRemaining,
   padded,
+  formatEventDateTime,
   FALLBACK_EVENT_DATETIME,
 } from "./countdown.ts";
+
+test("formatEventDateTime", async (t) => {
+  await t.test("formats an ISO datetime in the +07:00 zone", () => {
+    const { date, time } = formatEventDateTime("2026-06-16T10:00:00+07:00");
+    assert.strictEqual(date, "16/06/2026");
+    assert.strictEqual(time, "10h00");
+  });
+
+  await t.test("converts a UTC instant into the pinned zone", () => {
+    // 03:00Z == 10:00 in Asia/Ho_Chi_Minh (+07:00)
+    const { date, time } = formatEventDateTime("2026-06-16T03:00:00Z");
+    assert.strictEqual(date, "16/06/2026");
+    assert.strictEqual(time, "10h00");
+  });
+
+  await t.test("returns empty strings for an invalid datetime", () => {
+    assert.deepStrictEqual(formatEventDateTime("not-a-date"), {
+      date: "",
+      time: "",
+    });
+  });
+});
 
 test("resolveEventDatetime", async (t) => {
   await t.test(
