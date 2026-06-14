@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) 16 project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+### 1. Environment variables
+
+Copy `.env.example` to `.env.local` and fill in the values:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Where to find it |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase dashboard → Project Settings → API → Project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase dashboard → Project Settings → API → anon/public key |
+
+### 2. Google OAuth (Supabase)
+
+1. Go to **Supabase dashboard → Authentication → Providers → Google**.
+2. Enable the provider and paste your Google Cloud OAuth client ID and secret.
+3. Add the following redirect URL in both the Supabase provider settings and the Google Cloud console:
+   - Development: `http://localhost:3000/auth/callback`
+   - Production: `https://<your-domain>/auth/callback`
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Unauthenticated requests redirect to `/login`; after signing in with Google you land on `/`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Auth architecture
+
+- **Route protection** lives in `proxy.ts` — Next.js 16 renamed Middleware to Proxy. It refreshes the Supabase session cookie on every request and redirects unauthenticated users to `/login`.
+- **Supabase helpers** are in `lib/supabase/`: `client.ts` (browser), `server.ts` (Server Components / Route Handlers), `proxy-session.ts` (cookie refresh in proxy), `env.ts` (typed env access).
+- **Auth routes**: `/login` (Google sign-in button), `/auth/callback` (OAuth exchange), `/auth/signout` (server-side sign-out).
+- Page-level `getUser()` calls remain the authoritative security check; the proxy layer is optimistic only.
+
+---
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Supabase Auth with Next.js](https://supabase.com/docs/guides/auth/server-side/nextjs)
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The easiest way to deploy is via the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme). Remember to set the two Supabase env vars in your Vercel project settings and add the production callback URL to both Supabase and Google Cloud console.
