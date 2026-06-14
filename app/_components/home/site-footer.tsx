@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FOOTER_NAV_LINKS } from "./home-data";
 
 /**
@@ -7,6 +10,7 @@ import { FOOTER_NAV_LINKS } from "./home-data";
  * Left: SAA logo. Center: nav links. Right: copyright text.
  */
 export default function SiteFooter() {
+  const pathname = usePathname();
   return (
     <footer
       className="w-full flex flex-row items-center justify-between"
@@ -35,29 +39,33 @@ export default function SiteFooter() {
 
         {/* Nav links */}
         <nav className="flex flex-row items-center" style={{ gap: "48px" }}>
-          {FOOTER_NAV_LINKS.map((link) => (
-            <Link
-              key={link.href + link.label}
-              href={link.href}
-              className="font-bold transition-colors duration-200 hover:text-[#FFEA9E]"
-              style={{
-                fontFamily: "var(--font-montserrat), sans-serif",
-                fontSize: "16px",
-                lineHeight: "24px",
-                letterSpacing: "0.15px",
-                padding: "16px",
-                color: link.active ? "#fff" : "#fff",
-                textShadow: link.active
-                  ? "0 4px 4px rgba(0,0,0,0.25), 0 0 6px #FAE287"
-                  : "none",
-                backgroundColor: link.active
-                  ? "rgba(255, 234, 158, 0.10)"
-                  : "transparent",
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {FOOTER_NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href + link.label}
+                href={link.href}
+                className="font-bold transition-colors duration-200 hover:text-[#FFEA9E]"
+                style={{
+                  fontFamily: "var(--font-montserrat), sans-serif",
+                  fontSize: "16px",
+                  lineHeight: "24px",
+                  letterSpacing: "0.15px",
+                  padding: "16px",
+                  color: "#fff",
+                  textShadow: isActive
+                    ? "0 4px 4px rgba(0,0,0,0.25), 0 0 6px #FAE287"
+                    : "none",
+                  backgroundColor: isActive
+                    ? "rgba(255, 234, 158, 0.10)"
+                    : "transparent",
+                }}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
 

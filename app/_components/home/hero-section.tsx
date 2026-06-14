@@ -159,7 +159,7 @@ export default function HeroSection({
         <div className="flex flex-row items-center" style={{ gap: "40px" }}>
           {/* About Awards — yellow fill */}
           <Link
-            href="/awards"
+            href="/he-thong-giai"
             className="flex items-center justify-center gap-2 font-bold rounded-[8px] transition-all duration-200 hover:opacity-90 hover:scale-[1.02]"
             style={{
               padding: "16px 24px",

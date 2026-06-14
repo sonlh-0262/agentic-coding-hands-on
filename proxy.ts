@@ -18,12 +18,13 @@ import { updateSession } from "@/lib/supabase/proxy-session";
 /**
  * Routes viewable without authentication. The homepage is public + auth-aware:
  * it renders for everyone and layers in user controls only when logged in.
- * The award/kudos/criteria routes are public-facing nav targets (not built
- * yet — they 404); listing them avoids bouncing logged-out visitors to /login.
- * Account-scoped routes (e.g. /profile, /admin) are intentionally omitted and
- * stay protected by default.
+ * The kudos/criteria routes are public-facing nav targets (not built yet —
+ * they 404); listing them avoids bouncing logged-out visitors to /login.
+ * The award system page (/he-thong-giai) is intentionally NOT listed: it is
+ * protected, so logged-out visitors are redirected to /login.
+ * Account-scoped routes (e.g. /profile, /admin) stay protected by default.
  */
-const PUBLIC_PATHS = ["/", "/login", "/awards", "/kudos", "/criteria"];
+const PUBLIC_PATHS = ["/", "/login", "/kudos", "/criteria"];
 
 export async function proxy(request: NextRequest) {
   const { response, user } = await updateSession(request);
