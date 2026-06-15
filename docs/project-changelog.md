@@ -2,6 +2,34 @@
 
 ## [Unreleased]
 
+### 2026-06-15 — Kudos feature (`/kudos`, full-stack, auth-protected)
+
+**Branch:** feat/viet-kudo
+
+**What shipped:**
+- Protected route `/kudos` — Kudos feed page with "Viết Kudo" modal; auth-gated via proxy + page-level redirect
+- **Supabase schema** (new `supabase/` directory — migrations must be applied manually; see `supabase/README.md`):
+  - `profiles` table with `handle_new_user` signup trigger and seed data
+  - `hashtags` table (seeded with category tags)
+  - `kudos` table and `kudo_hashtags` join table
+  - `kudos-images` Storage bucket
+  - Full Row Level Security (RLS) policies on all tables; anonymous sender identity is never stored or leaked
+- **Data layer** (`lib/kudos/`): `types.ts`, `validation.ts`, `queries.ts`, `actions.ts`, `sanitize-html.ts`
+- **Supabase admin client** (`lib/supabase/admin.ts`): service-role client, server-only, used for the Kudos write path
+- **UI**: recipient search (@mention autocomplete), seeded hashtag dropdown (1–5 tags), image upload (up to 5 images, MIME allowlist), custom contentEditable rich-text editor, anonymous sender toggle, real `createKudo` Server Action
+- **Security posture**: RLS enforced at DB layer; all input validated + HTML-sanitized server-side before write; anonymous sender identity is never persisted or exposed to recipients
+- 138 unit tests pass; `tsc`, `eslint`, and `next build` all green
+
+**Environment variables (new):**
+- `SUPABASE_SERVICE_ROLE_KEY` — server-only (no `NEXT_PUBLIC_` prefix); bypasses RLS for the Kudos write path. See `.env.example`.
+
+**Pending (requires DB access):**
+- Supabase migrations in `supabase/migrations/` have not been applied to the live database. Apply via `supabase db push` or `psql`. See `supabase/README.md` for instructions.
+
+**Resolves:** "Known nav placeholder" from 2026-06-14 entry — `/kudos` is now fully implemented.
+
+---
+
 ### 2026-06-15 — Award System page (`/he-thong-giai`, auth-protected)
 
 **What shipped:**
