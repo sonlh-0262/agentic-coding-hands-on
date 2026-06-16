@@ -33,7 +33,7 @@ backed by Supabase (profiles directory, seeded hashtags, kudos + relations, imag
 
 | # | Phase | Track | Status | Depends on |
 |---|-------|-------|--------|------------|
-| 1 | [DB schema & migrations](phase-01-db-schema-migrations.md) | B | completed (migration apply blocked on DB access) | — |
+| 1 | [DB schema & migrations](phase-01-db-schema-migrations.md) | B | completed (migrations applied 2026-06-16) | — |
 | 2 | [Data access layer & admin client](phase-02-data-access-layer.md) | B | completed | Phase 1 |
 | 3 | [/kudos page (feed + auth guard)](phase-03-kudos-page.md) | B | completed | Phase 2 |
 | 4 | [Integration: wire modal to real data](phase-04-integration.md) | A↔B | completed | Phases 2,3 + Track A |

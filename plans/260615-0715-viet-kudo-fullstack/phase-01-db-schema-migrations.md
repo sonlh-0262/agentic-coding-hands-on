@@ -74,7 +74,7 @@ kudos.image_urls[] ──refs──> Storage bucket kudos-images
 - [x] 0004 storage bucket + policies
 - [x] seed.sql (profiles + hashtags)
 - [x] supabase/README.md apply instructions
-- [ ] Apply against user-provided DB; verify trigger fires on test signup (BLOCKED: awaiting `SUPABASE_SERVICE_ROLE_KEY` + `SUPABASE_DB_URL`)
+- [x] Apply against user-provided DB (2026-06-16, via Tokyo session pooler `aws-1-ap-northeast-1`, `gssencmode=disable`). Verified: profiles=8, hashtags=10 seeded; RLS on all 4 tables; `kudos-images` bucket + 3 storage policies; `on_auth_user_created` trigger present. (Trigger fires-on-signup to confirm on next real Google login.)
 
 ## Success Criteria
 - All migrations apply cleanly in order on a fresh DB and are re-runnable (idempotent).
