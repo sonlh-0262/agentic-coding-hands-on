@@ -14,6 +14,8 @@ cp .env.example .env.local
 |---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase dashboard → Project Settings → API → Project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase dashboard → Project Settings → API → anon/public key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase dashboard → Project Settings → API → service_role secret. **Server-only** — never prefix with `NEXT_PUBLIC_`. Used by the Kudos write path (`lib/supabase/admin.ts`). |
+| `NEXT_PUBLIC_EVENT_DATETIME` | ISO-8601 datetime string for the homepage countdown target (e.g. `2026-12-31T18:30:00+07:00`). Optional — a fallback date is used if unset. |
 
 ### 2. Google OAuth (Supabase)
 
@@ -30,6 +32,8 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000). Unauthenticated requests redirect to `/login`; after signing in with Google you land on `/`.
+
+> **Database migrations:** The Kudos feature requires Supabase schema migrations in `supabase/migrations/`. Apply them before using `/kudos`. See `supabase/README.md` for instructions.
 
 ---
 
