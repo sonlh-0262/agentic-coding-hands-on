@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+### 2026-06-20 — Profile page (`/profile`, auth-protected)
+
+**Branch:** feat/profile-page (unmerged as of 2026-06-20)
+
+**What shipped:**
+- Protected route `/profile` — self-only profile page, auth-gated (redirect to `/login` when unauthenticated); uses `force-dynamic` rendering
+- **Supabase schema** (`supabase/migrations/0005_kudo_hearts.sql` — apply-pending; see `supabase/README.md`):
+  - `kudo_hearts` table: one heart per user per kudo, toggle via insert/delete; primary key `(kudo_id, user_id)`
+  - RLS: authenticated read (all), insert/delete restricted to own rows
+  - Indexes: `kudo_hearts_kudo_idx`, `kudo_hearts_user_kudo_idx`, plus `kudos_sender_idx` on existing `kudos` table (covers "Đã gửi" feed)
+- **Data layer** (`lib/profile/`): `types.ts`, `queries.ts` (stats + paginated feed), `actions.ts` (heart toggle Server Action)
+- **UI** (`app/_components/profile/`):
+  - Hero section: avatar, display name, placeholder department/title badges (`Sun* / Sunner`)
+  - Stats section: kudos received, kudos sent, hearts received — all from live DB queries
+  - Kudo feed: Sent / Received tab filter, per-kudo heart count, heart toggle button (optimistic UI)
+  - Awards header: icon/badge collection slots (mock — no backend yet)
+- **Mock scope**: Secret Box stats + button, icon/badge collection, role/department pills — rendered from `profile-mock-data.ts`, no backend
+
+**Pending (requires DB access):**
+- Migration `0005_kudo_hearts.sql` has not been applied to the live database. Apply via `supabase db push` or `psql`. See `supabase/README.md`.
+
+---
+
 ### 2026-06-15 — Kudos feature (`/kudos`, full-stack, auth-protected)
 
 **Branch:** feat/viet-kudo
