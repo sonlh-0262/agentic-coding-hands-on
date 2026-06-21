@@ -117,9 +117,11 @@ export async function getProfileFeed(
   return rows.map((row) => {
     const sender = one(row.sender);
     const recipient = one(row.recipient);
-    const senderName = row.is_anonymous
-      ? row.anonymous_name?.trim() || "Ẩn danh"
-      : sender?.full_name || "Ẩn danh";
+    // Null signals "anonymous with no chosen name" — consumers render a
+    // translated fallback (kudos.feed.anonymous) rather than a hardcoded string.
+    const senderName: string | null = row.is_anonymous
+      ? row.anonymous_name?.trim() || null
+      : sender?.full_name || null;
     return {
       id: row.id,
       senderName,

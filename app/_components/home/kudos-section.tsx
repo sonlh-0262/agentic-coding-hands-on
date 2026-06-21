@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { KUDOS_CONTENT } from "./home-data";
 
 /**
@@ -8,6 +11,8 @@ import { KUDOS_CONTENT } from "./home-data";
  * Left: text content. Right: kudos wordmark SVG.
  */
 export default function KudosSection() {
+  const t = useTranslations("home");
+  const tCommon = useTranslations("common");
   return (
     <section
       className="w-full"
@@ -57,10 +62,10 @@ export default function KudosSection() {
                 margin: 0,
               }}
             >
-              {KUDOS_CONTENT.label}
+              {t("kudos.label")}
             </p>
 
-            {/* Title */}
+            {/* Title — "Sun* Kudos" is a brand name, kept as-is */}
             <h2
               id="kudos-section-title"
               style={{
@@ -73,7 +78,7 @@ export default function KudosSection() {
                 margin: 0,
               }}
             >
-              {KUDOS_CONTENT.title}
+              Sun* Kudos
             </h2>
 
             {/* Description */}
@@ -89,11 +94,11 @@ export default function KudosSection() {
                 margin: 0,
               }}
             >
-              {KUDOS_CONTENT.description}
+              {t("kudos.description")}
             </p>
           </div>
 
-          {/* CTA Button */}
+          {/* CTA Button — uses common.details */}
           <Link
             href={KUDOS_CONTENT.ctaHref}
             className="inline-flex items-center gap-2 font-bold rounded-[4px] transition-all duration-200 hover:opacity-90"
@@ -109,7 +114,7 @@ export default function KudosSection() {
               alignSelf: "flex-start",
             }}
           >
-            {KUDOS_CONTENT.ctaLabel}
+            {tCommon("details")}
             <Image
               src="/home/icon-arrow.svg"
               alt=""
@@ -127,7 +132,7 @@ export default function KudosSection() {
         >
           <Image
             src="/home/kudos-wordmark.svg"
-            alt="Sun* Kudos"
+            alt={t("kudos.wordmarkAlt")}
             width={364}
             height={72}
             className="object-contain"

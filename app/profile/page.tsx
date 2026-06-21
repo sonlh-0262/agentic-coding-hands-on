@@ -1,9 +1,19 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/supabase/auth";
 import { getProfileStats, getProfileFeed } from "@/lib/profile/queries";
 import type { FeedDirection, ProfileFeedKudo } from "@/lib/profile/types";
 import type { HomeUser } from "@/app/_components/home/home-client";
 import ProfilePageClient from "@/app/_components/profile/profile-page-client";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("metadata");
+  return {
+    title: t("profile.title"),
+    description: t("profile.description"),
+  };
+}
 import {
   PROFILE_ICON_SLOTS,
   PROFILE_STATS,

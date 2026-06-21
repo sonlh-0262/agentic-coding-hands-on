@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 /**
  * AwardsHero — Full-width keyvisual banner for the Award System page.
@@ -12,6 +15,8 @@ import Image from "next/image";
  * /home/root-further-logo.png) — the same brand artwork rendered on the hero.
  */
 export default function AwardsHero() {
+  const t = useTranslations("awards");
+
   return (
     <section
       className="relative w-full overflow-hidden"
@@ -57,7 +62,7 @@ export default function AwardsHero() {
               textAlign: "center",
             }}
           >
-            Sun* Annual Awards 2025
+            {t("hero.subtitle")}
           </p>
 
           {/* Horizontal rule */}
@@ -84,7 +89,7 @@ export default function AwardsHero() {
               textAlign: "center",
             }}
           >
-            Hệ thống giải thưởng SAA 2025
+            {t("hero.title")}
           </h1>
         </div>
       </div>

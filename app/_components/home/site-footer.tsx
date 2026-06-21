@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { FOOTER_NAV_LINKS } from "./home-data";
 
 /**
@@ -11,6 +12,8 @@ import { FOOTER_NAV_LINKS } from "./home-data";
  */
 export default function SiteFooter() {
   const pathname = usePathname();
+  const t = useTranslations("home");
+  const tCommon = useTranslations("common");
   return (
     <footer
       className="w-full flex flex-row items-center justify-between"
@@ -19,7 +22,7 @@ export default function SiteFooter() {
         borderTop: "1px solid #2E3940",
         height: "144px",
       }}
-      aria-label="Site footer"
+      aria-label={t("footer.ariaLabel")}
     >
       {/* Left: Logo + nav links */}
       <div
@@ -27,10 +30,10 @@ export default function SiteFooter() {
         style={{ gap: "80px" }}
       >
         {/* Logo */}
-        <Link href="/" aria-label="SAA 2025 homepage">
+        <Link href="/" aria-label={t("footer.logoAriaLabel")}>
           <Image
             src="/home/footer-logo.png"
-            alt="SAA 2025 logo"
+            alt={t("footer.logoAlt")}
             width={69}
             height={64}
             className="object-contain"
@@ -43,7 +46,7 @@ export default function SiteFooter() {
             const isActive = pathname === link.href;
             return (
               <Link
-                key={link.href + link.label}
+                key={link.href + link.labelKey}
                 href={link.href}
                 className="font-bold transition-colors duration-200 hover:text-[#FFEA9E]"
                 style={{
@@ -62,7 +65,7 @@ export default function SiteFooter() {
                 }}
                 aria-current={isActive ? "page" : undefined}
               >
-                {link.label}
+                {t(`footer.nav.${link.labelKey}`)}
               </Link>
             );
           })}
@@ -79,7 +82,7 @@ export default function SiteFooter() {
           margin: 0,
         }}
       >
-        Bản quyền thuộc về Sun* © 2025
+        {tCommon("copyright")}
       </p>
     </footer>
   );

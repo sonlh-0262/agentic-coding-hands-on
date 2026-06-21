@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * profile-kudo-card.tsx
  *
@@ -14,6 +16,7 @@
  */
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { ProfileKudoCard as ProfileKudoCardType } from "./profile-mock-data";
 
 interface ProfileKudoCardProps {
@@ -27,13 +30,24 @@ interface ProfileKudoCardProps {
 }
 
 interface UserInfoBlockProps {
-  name: string;
+  /** Null when anonymous with no chosen display name — a translated fallback is shown. */
+  name: string | null;
   avatarSrc: string;
   department: string;
+  /** Badge title — either a catalog key (e.g. "legendHero") or a raw display string */
   title: string;
 }
 
 function UserInfoBlock({ name, avatarSrc, department, title }: UserInfoBlockProps) {
+  const t = useTranslations("profile");
+  const tKudos = useTranslations("kudos");
+  const displayName = name ?? tKudos("feed.anonymous");
+  // Resolve badge title: if a catalog key exists for it, use it; otherwise show as-is
+  const badgeTitleMap: Record<string, string> = {
+    legendHero: t("badge.legendHero"),
+    superHero: t("badge.superHero"),
+  };
+  const titleLabel = badgeTitleMap[title] ?? title;
   return (
     <div
       style={{
@@ -59,7 +73,7 @@ function UserInfoBlock({ name, avatarSrc, department, title }: UserInfoBlockProp
       >
         <Image
           src={avatarSrc}
-          alt={`Ảnh đại diện của ${name}`}
+          alt={t("kudoCard.avatarAlt", { name: displayName })}
           width={64}
           height={64}
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
@@ -91,7 +105,7 @@ function UserInfoBlock({ name, avatarSrc, department, title }: UserInfoBlockProp
             textOverflow: "ellipsis",
           }}
         >
-          {name}
+          {displayName}
         </p>
         <div
           style={{
@@ -144,7 +158,7 @@ function UserInfoBlock({ name, avatarSrc, department, title }: UserInfoBlockProp
               whiteSpace: "nowrap",
             }}
           >
-            {title}
+            {titleLabel}
           </span>
         </div>
       </div>
@@ -233,8 +247,17 @@ export default function ProfileKudoCard({
   heartDisabled = false,
   shareUrl,
 }: ProfileKudoCardProps) {
-  const isSpam = card.statusLabel === "Spam";
-  const isIdol = card.statusLabel === "IDOL GIỚI TRẺ";
+  const t = useTranslations("profile");
+  const isSpam = card.statusLabel === "spam";
+  const isIdol = card.statusLabel === "idolGioiTre";
+
+  // Resolve the display label from the i18n catalog key
+  const statusDisplayLabel =
+    card.statusLabel === "spam"
+      ? t("status.spam")
+      : card.statusLabel === "idolGioiTre"
+        ? t("status.idolGioiTre")
+        : null;
 
   const handleCopyLink = () => {
     let url = shareUrl ?? "";
@@ -305,7 +328,7 @@ export default function ProfileKudoCard({
         />
 
         {/* Status label (Spam / IDOL GIỚI TRẺ) — top-right */}
-        {card.statusLabel && (
+        {statusDisplayLabel && (
           <div
             style={{
               display: "flex",
@@ -332,7 +355,7 @@ export default function ProfileKudoCard({
                 whiteSpace: "nowrap",
               }}
             >
-              {card.statusLabel}
+              {statusDisplayLabel}
             </span>
           </div>
         )}
@@ -367,7 +390,7 @@ export default function ProfileKudoCard({
         </p>
 
         {/* IDOL label row (only when statusLabel = IDOL GIỚI TRẺ) */}
-        {isIdol && (
+        {isIdol && statusDisplayLabel && (
           <p
             style={{
               margin: 0,
@@ -379,7 +402,7 @@ export default function ProfileKudoCard({
               textAlign: "center",
             }}
           >
-            {card.statusLabel}
+            {statusDisplayLabel}
           </p>
         )}
 
@@ -432,7 +455,7 @@ export default function ProfileKudoCard({
               >
                 <Image
                   src={src}
-                  alt={`Ảnh ${i + 1}`}
+                  alt={t("kudoCard.imageAlt", { index: i + 1 })}
                   width={88}
                   height={88}
                   style={{
@@ -512,7 +535,7 @@ export default function ProfileKudoCard({
           }}
           aria-pressed={card.heartedByMe ?? false}
           aria-label={
-            card.heartedByMe ? "Bỏ thích kudo này" : "Thích kudo này"
+            card.heartedByMe ? t("kudoCard.heartRemove") : t("kudoCard.heartAdd")
           }
         >
           <span
@@ -557,9 +580,9 @@ export default function ProfileKudoCard({
             (e.currentTarget as HTMLButtonElement).style.background =
               "transparent";
           }}
-          aria-label="Sao chép liên kết"
+          aria-label={t("kudoCard.copyLinkLabel")}
         >
-          Copy Link
+          {t("kudoCard.copyLinkText")}
           <LinkIcon />
         </button>
       </div>

@@ -1,0 +1,24 @@
+{
+  "header": {
+    "homepageAriaLabel": "Về trang chủ",
+    "switchLanguageAriaLabel": "Chuyển ngôn ngữ",
+    "flagVnAlt": "Cờ Việt Nam",
+    "expandAlt": "Mở rộng",
+    "logoAlt": "Logo SAA 2025"
+  },
+  "hero": {
+    "welcomeLine1": "Bắt đầu hành trình của bạn cùng SAA 2025.",
+    "welcomeLine2": "Đăng nhập để khám phá!",
+    "logoAlt": "Root Further"
+  },
+  "googleLoginButton": {
+    "label": "LOGIN With Google",
+    "ariaLabel": "Đăng nhập bằng Google"
+  },
+  "error": {
+    "loginFailed": "Đăng nhập thất bại. Vui lòng thử lại."
+  },
+  "footer": {
+    "ariaLabel": "Chân trang"
+  }
+}

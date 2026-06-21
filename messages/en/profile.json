@@ -1,0 +1,45 @@
+{
+  "hero": {
+    "avatarAlt": "Avatar of {name}",
+    "badgeLocked": "Locked badge",
+    "badgeAlt": "Badge {index}",
+    "iconCollectionTitle": "My icon collection"
+  },
+  "stats": {
+    "kudosReceived": "Kudos you received",
+    "kudosSent": "Kudos you sent",
+    "heartsReceived": "Hearts you received",
+    "secretBoxOpened": "Secret Boxes opened",
+    "secretBoxUnopened": "Secret Boxes unopened",
+    "openSecretBox": "Open Secret Box 🎁"
+  },
+  "awards": {
+    "filterSent": "Sent ({count})",
+    "filterReceived": "Received ({count})",
+    "filterAriaLabel": "Filter kudos — currently showing {activeLabel}"
+  },
+  "feed": {
+    "emptyStateSent": "You haven't sent any kudos yet.",
+    "emptyStateReceived": "You haven't received any kudos yet.",
+    "truncationNote": "Showing {shown} most recent kudos / {total} total"
+  },
+  "kudoCard": {
+    "avatarAlt": "Avatar of {name}",
+    "imageAlt": "Image {index}",
+    "heartAdd": "Like this kudo",
+    "heartRemove": "Unlike this kudo",
+    "copyLinkLabel": "Copy link",
+    "copyLinkText": "Copy Link"
+  },
+  "status": {
+    "spam": "Spam",
+    "idolGioiTre": "IDOL GIỚI TRẺ"
+  },
+  "badge": {
+    "legendHero": "Legend Hero",
+    "superHero": "Super Hero"
+  },
+  "errors": {
+    "unauthenticated": "You need to be logged in"
+  }
+}

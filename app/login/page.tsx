@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/supabase/auth";
 import LoginClient from "./_components/login-client";
 
-export const metadata: Metadata = {
-  title: "Đăng nhập | SAA 2025",
-  description: "Đăng nhập để bắt đầu hành trình cùng SAA 2025.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("metadata");
+  return {
+    title: t("login.title"),
+    description: t("login.description"),
+  };
+}
 
 export default async function LoginPage({
   searchParams,

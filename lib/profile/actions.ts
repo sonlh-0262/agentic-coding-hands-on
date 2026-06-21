@@ -15,7 +15,7 @@ import type { ToggleHeartResult } from "./types";
 /** Add or remove the current user's heart on a kudo. Returns the new state. */
 export async function toggleHeart(kudoId: string): Promise<ToggleHeartResult> {
   const user = await getCurrentUser();
-  if (!user) return { ok: false, error: "Bạn cần đăng nhập" };
+  if (!user) return { ok: false, error: "Bạn cần đăng nhập", errorCode: "unauthenticated" };
 
   const supabase = await createClient();
 

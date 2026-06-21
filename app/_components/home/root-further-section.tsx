@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import { ROOT_FURTHER_PARAGRAPHS, ENGLISH_PROVERB } from "./home-data";
+import { useTranslations } from "next-intl";
 
 /**
  * RootFurtherSection — "ROOT FURTHER" decorative heading + description paragraphs.
@@ -7,6 +9,12 @@ import { ROOT_FURTHER_PARAGRAPHS, ENGLISH_PROVERB } from "./home-data";
  * Background card: rounded dark container at 8px border-radius.
  */
 export default function RootFurtherSection() {
+  const t = useTranslations("home");
+  const paragraphs = [
+    t("rootFurther.paragraphs.0"),
+    t("rootFurther.paragraphs.1"),
+  ];
+  const proverb = t("rootFurther.proverb");
   return (
     <section
       className="w-full flex flex-col items-center"
@@ -14,7 +22,7 @@ export default function RootFurtherSection() {
         padding: "0 144px",
         backgroundColor: "#00101A",
       }}
-      aria-label="Root Further"
+      aria-label={t("rootFurther.sectionAriaLabel")}
     >
       <div
         className="w-full flex flex-col items-center"
@@ -65,7 +73,7 @@ export default function RootFurtherSection() {
           className="w-full flex flex-col"
           style={{ gap: "32px", maxWidth: "1152px" }}
         >
-          {ROOT_FURTHER_PARAGRAPHS.map((paragraph, idx) => (
+          {paragraphs.map((paragraph, idx) => (
             <p
               key={idx}
               className="font-bold text-white"
@@ -91,7 +99,7 @@ export default function RootFurtherSection() {
                       color: "#fff",
                     }}
                   >
-                    {ENGLISH_PROVERB}
+                    {proverb}
                   </span>
                 </>
               ) : (

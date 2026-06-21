@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import type { RecipientOption } from "./kudo-recipient-field";
 
 interface KudoMentionDropdownProps {
@@ -18,12 +19,14 @@ export default function KudoMentionDropdown({
   position,
   onSelect,
 }: KudoMentionDropdownProps) {
+  const t = useTranslations("kudos");
+
   if (options.length === 0) return null;
 
   return (
     <ul
       role="listbox"
-      aria-label="Gợi ý nhắc tên"
+      aria-label={t("mention.dropdownAriaLabel")}
       style={{
         position: "absolute",
         top: position.top,

@@ -1,9 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import AwardsNav from "./awards-nav";
 import AwardDetailSection from "./award-detail-section";
 import { AWARDS_LIST } from "./awards-data";
+import type { AwardSlug } from "./awards-data";
 
 /**
  * AwardsBody — Two-column layout:
@@ -13,8 +15,12 @@ import { AWARDS_LIST } from "./awards-data";
  * Scroll-spy: uses IntersectionObserver to track which section is in view
  * and update the active nav item accordingly.
  * Nav click: smooth-scrolls to the target section anchor.
+ *
+ * Translates all display copy via `useTranslations('awards')` and threads
+ * it down to child components as props.
  */
 export default function AwardsBody() {
+  const t = useTranslations("awards");
   const [activeSlug, setActiveSlug] = useState<string>(AWARDS_LIST[0].slug);
   const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -81,6 +87,10 @@ export default function AwardsBody() {
     }
   }, []);
 
+  const quantityLabel = t("quantity.label");
+  const valueLabel = t("value.label");
+  const orLabel = t("value.or");
+
   return (
     <div
       className="w-full"
@@ -103,9 +113,27 @@ export default function AwardsBody() {
           className="flex flex-col flex-1 min-w-0"
           style={{ gap: "80px" }}
         >
-          {AWARDS_LIST.map((award) => (
-            <AwardDetailSection key={award.slug} award={award} />
-          ))}
+          {AWARDS_LIST.map((award) => {
+            const slug = award.slug as AwardSlug;
+            const itemValues = award.values.map((v, idx) => ({
+              amount: v.amount,
+              note: t(`items.${slug}.values.${idx}.note`),
+            }));
+
+            return (
+              <AwardDetailSection
+                key={slug}
+                award={award}
+                title={t(`items.${slug}.title`)}
+                description={t(`items.${slug}.description`)}
+                quantityUnit={t(`items.${slug}.quantityUnit`)}
+                quantityLabel={quantityLabel}
+                valueLabel={valueLabel}
+                orLabel={orLabel}
+                values={itemValues}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

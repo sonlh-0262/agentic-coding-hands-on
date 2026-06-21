@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { KudoFeedItem } from "@/lib/kudos/types";
 import { htmlToPlainText } from "@/lib/kudos/validation";
 
@@ -10,7 +13,9 @@ import { htmlToPlainText } from "@/lib/kudos/validation";
  * real sender stripped (see lib/kudos/queries.listRecentKudos).
  */
 export default function KudoFeedCard({ kudo }: { kudo: KudoFeedItem }) {
+  const t = useTranslations("kudos");
   const excerpt = htmlToPlainText(kudo.messageHtml);
+  const authorDisplay = kudo.authorName ?? t("feed.anonymous");
 
   return (
     <article
@@ -26,8 +31,8 @@ export default function KudoFeedCard({ kudo }: { kudo: KudoFeedItem }) {
       }}
     >
       <p style={{ margin: 0, fontSize: "14px", fontWeight: 700 }}>
-        <span style={{ opacity: 0.7 }}>Từ</span> {kudo.authorName}{" "}
-        <span style={{ opacity: 0.7 }}>đến</span> {kudo.recipientName}
+        <span style={{ opacity: 0.7 }}>{t("feed.from")}</span> {authorDisplay}{" "}
+        <span style={{ opacity: 0.7 }}>{t("feed.to")}</span> {kudo.recipientName}
       </p>
 
       {kudo.title && (

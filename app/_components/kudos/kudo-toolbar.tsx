@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 /** Toolbar button IDs matching the Figma mms_C_* sections */
 export type ToolbarAction =
@@ -13,26 +14,23 @@ export type ToolbarAction =
 
 const TOOLBAR_BUTTONS: {
   id: ToolbarAction;
-  label: string;
+  labelKey: string;
   icon: string;
-  alt: string;
 }[] = [
-  { id: "bold", label: "B", icon: "/viet-kudo/Bold.svg", alt: "Bold" },
-  { id: "italic", label: "I", icon: "/viet-kudo/Italic.svg", alt: "Italic" },
+  { id: "bold", labelKey: "toolbar.bold", icon: "/viet-kudo/Bold.svg" },
+  { id: "italic", labelKey: "toolbar.italic", icon: "/viet-kudo/Italic.svg" },
   {
     id: "strikethrough",
-    label: "S",
+    labelKey: "toolbar.strikethrough",
     icon: "/viet-kudo/Strikethrough.svg",
-    alt: "Strikethrough",
   },
   {
     id: "numberList",
-    label: "List",
+    labelKey: "toolbar.numberList",
     icon: "/viet-kudo/Number_List.svg",
-    alt: "Number list",
   },
-  { id: "link", label: "Link", icon: "/viet-kudo/Link.svg", alt: "Link" },
-  { id: "quote", label: "Quote", icon: "/viet-kudo/Quote.svg", alt: "Quote" },
+  { id: "link", labelKey: "toolbar.link", icon: "/viet-kudo/Link.svg" },
+  { id: "quote", labelKey: "toolbar.quote", icon: "/viet-kudo/Quote.svg" },
 ];
 
 interface KudoToolbarProps {
@@ -51,17 +49,20 @@ export default function KudoToolbar({
   activeFormats = new Set(),
   onToggle,
 }: KudoToolbarProps) {
+  const t = useTranslations("kudos");
+
   return (
     <div
       className="flex items-center"
       style={{ alignSelf: "stretch" }}
       role="toolbar"
-      aria-label="Text formatting"
+      aria-label={t("toolbar.ariaLabel")}
     >
       {TOOLBAR_BUTTONS.map((btn, idx) => {
         const isFirst = idx === 0;
         const isLast = idx === TOOLBAR_BUTTONS.length - 1;
         const isActive = activeFormats.has(btn.id);
+        const label = t(btn.labelKey as Parameters<typeof t>[0]);
 
         let borderRadius = "0px";
         if (isFirst) borderRadius = "8px 0 0 0";
@@ -71,7 +72,7 @@ export default function KudoToolbar({
           <button
             key={btn.id}
             type="button"
-            aria-label={btn.alt}
+            aria-label={label}
             aria-pressed={isActive}
             onClick={() => onToggle?.(btn.id)}
             style={{
@@ -94,7 +95,7 @@ export default function KudoToolbar({
           >
             <Image
               src={btn.icon}
-              alt={btn.alt}
+              alt={label}
               width={24}
               height={24}
               aria-hidden="true"

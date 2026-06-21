@@ -1,9 +1,19 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/supabase/auth";
 import { listHashtags, listRecentKudos } from "@/lib/kudos/queries";
 import type { HomeUser } from "@/app/_components/home/home-client";
 import type { Hashtag, KudoFeedItem } from "@/lib/kudos/types";
 import KudosPageClient from "@/app/_components/kudos/kudos-page-client";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("metadata");
+  return {
+    title: t("kudos.title"),
+    description: t("kudos.description"),
+  };
+}
 
 // Auth state is per-request; never serve a cached/prerendered version.
 export const dynamic = "force-dynamic";

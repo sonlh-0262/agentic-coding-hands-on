@@ -16,6 +16,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 type FeedDirection = "sent" | "received";
 
@@ -36,10 +37,13 @@ export default function ProfileAwardsHeader({
   filter,
   onChangeFilter,
 }: ProfileAwardsHeaderProps) {
+  const t = useTranslations("profile");
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const activeLabel =
-    filter === "sent" ? `Đã gửi (${sentCount})` : `Đã nhận (${receivedCount})`;
+    filter === "sent"
+      ? t("awards.filterSent", { count: sentCount })
+      : t("awards.filterReceived", { count: receivedCount });
 
   // Close the dropdown on outside click or Escape (review finding M4).
   useEffect(() => {
@@ -82,7 +86,7 @@ export default function ProfileAwardsHeader({
           gap: "16px",
         }}
       >
-        {/* Eyebrow */}
+        {/* Eyebrow — brand name, not translated */}
         <p
           style={{
             margin: 0,
@@ -162,7 +166,7 @@ export default function ProfileAwardsHeader({
               }}
               aria-haspopup="listbox"
               aria-expanded={open}
-              aria-label={`Lọc kudos — đang hiển thị ${activeLabel}`}
+              aria-label={t("awards.filterAriaLabel", { activeLabel })}
             >
               {activeLabel}
               <svg
@@ -206,10 +210,13 @@ export default function ProfileAwardsHeader({
               >
                 {(
                   [
-                    { dir: "sent" as const, label: `Đã gửi (${sentCount})` },
+                    {
+                      dir: "sent" as const,
+                      label: t("awards.filterSent", { count: sentCount }),
+                    },
                     {
                       dir: "received" as const,
-                      label: `Đã nhận (${receivedCount})`,
+                      label: t("awards.filterReceived", { count: receivedCount }),
                     },
                   ]
                 ).map((opt) => (

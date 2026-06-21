@@ -58,14 +58,14 @@ export async function uploadKudoImage(
   formData: FormData,
 ): Promise<UploadImageResult> {
   const user = await getCurrentUser();
-  if (!user) return { ok: false, error: "Bạn cần đăng nhập" };
+  if (!user) return { ok: false, error: "Bạn cần đăng nhập", errorCode: "unauthenticated" };
 
   const file = formData.get("file");
   if (!(file instanceof File)) {
-    return { ok: false, error: "Không tìm thấy tệp" };
+    return { ok: false, error: "Không tìm thấy tệp", errorCode: "fileNotFound" };
   }
   if (!isAllowedImageType(file.type)) {
-    return { ok: false, error: "Định dạng tệp không hợp lệ" };
+    return { ok: false, error: "Định dạng tệp không hợp lệ", errorCode: "invalidImageType" };
   }
 
   const supabase = await createClient();
@@ -87,7 +87,7 @@ export async function uploadKudoImage(
  */
 export async function createKudo(input: KudoInput): Promise<CreateKudoResult> {
   const user = await getCurrentUser();
-  if (!user) return { ok: false, errors: ["Bạn cần đăng nhập"] };
+  if (!user) return { ok: false, errors: ["Bạn cần đăng nhập"], errorCodes: ["unauthenticated"] };
 
   const result = validateKudoInput(input);
   if (!result.ok) return { ok: false, errors: result.errors };
@@ -96,7 +96,7 @@ export async function createKudo(input: KudoInput): Promise<CreateKudoResult> {
   // bypassing the UI must not inject arbitrary external URLs into the feed.
   const storagePrefix = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${BUCKET}/`;
   if (input.imageUrls.some((url) => !url.startsWith(storagePrefix))) {
-    return { ok: false, errors: ["Ảnh không hợp lệ"] };
+    return { ok: false, errors: ["Ảnh không hợp lệ"], errorCodes: ["invalidImage"] };
   }
 
   await ensureSenderProfile(user.id);
@@ -118,7 +118,11 @@ export async function createKudo(input: KudoInput): Promise<CreateKudoResult> {
     .single();
 
   if (insertError || !kudo) {
-    return { ok: false, errors: [insertError?.message ?? "Không thể gửi kudo"] };
+    return {
+      ok: false,
+      errors: [insertError?.message ?? "Không thể gửi kudo"],
+      errorCodes: ["sendFailed"],
+    };
   }
 
   if (input.hashtagIds.length > 0) {

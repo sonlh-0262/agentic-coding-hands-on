@@ -2,9 +2,22 @@ import Image from "next/image";
 import type { AwardItem } from "./awards-data";
 import AwardQuantityRow from "./award-quantity-row";
 import AwardValueBlock from "./award-value-block";
+import type { AwardValueDisplay } from "./award-value-block";
 
 interface AwardDetailSectionProps {
   award: AwardItem;
+  /** Translated display strings for this award item. */
+  title: string;
+  description: string;
+  quantityUnit: string;
+  /** Translated label for the quantity row. */
+  quantityLabel: string;
+  /** Translated label for the value block. */
+  valueLabel: string;
+  /** Translated "Or" separator for the value block. */
+  orLabel: string;
+  /** Values with translated notes merged in. */
+  values: AwardValueDisplay[];
 }
 
 /**
@@ -16,12 +29,23 @@ interface AwardDetailSectionProps {
  *   - Award title (gold)
  *   - Description paragraph
  *   - Divider
- *   - "Số lượng giải thưởng:" + quantity + unit
+ *   - Quantity row
  *   - Divider
- *   - "Giá trị giải thưởng:" + amount + note (one or two rows for Signature)
+ *   - Value block (one or two rows for Signature)
  * Ends with a horizontal rule divider between sections.
+ *
+ * All display copy is received as props — translated by the parent (AwardsBody).
  */
-export default function AwardDetailSection({ award }: AwardDetailSectionProps) {
+export default function AwardDetailSection({
+  award,
+  title,
+  description,
+  quantityUnit,
+  quantityLabel,
+  valueLabel,
+  orLabel,
+  values,
+}: AwardDetailSectionProps) {
   const isImageLeft = award.imagePosition === "image-left";
 
   return (
@@ -68,7 +92,7 @@ export default function AwardDetailSection({ award }: AwardDetailSectionProps) {
           >
             <Image
               src={award.nameImage}
-              alt={award.title}
+              alt={title}
               width={award.nameImageWidth}
               height={award.nameImageHeight}
               className="object-contain"
@@ -105,7 +129,7 @@ export default function AwardDetailSection({ award }: AwardDetailSectionProps) {
                   margin: 0,
                 }}
               >
-                {award.title}
+                {title}
               </h2>
             </div>
 
@@ -122,7 +146,7 @@ export default function AwardDetailSection({ award }: AwardDetailSectionProps) {
                 margin: 0,
               }}
             >
-              {award.description}
+              {description}
             </p>
           </div>
 
@@ -138,8 +162,9 @@ export default function AwardDetailSection({ award }: AwardDetailSectionProps) {
 
           {/* Quantity row */}
           <AwardQuantityRow
+            label={quantityLabel}
             quantity={award.quantity}
-            quantityUnit={award.quantityUnit}
+            quantityUnit={quantityUnit}
           />
 
           {/* Divider */}
@@ -153,7 +178,11 @@ export default function AwardDetailSection({ award }: AwardDetailSectionProps) {
           />
 
           {/* Value block */}
-          <AwardValueBlock values={award.values} />
+          <AwardValueBlock
+            label={valueLabel}
+            orLabel={orLabel}
+            values={values}
+          />
         </div>
       </div>
 

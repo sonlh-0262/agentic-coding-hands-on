@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 interface KudoAnonymousFieldProps {
   checked: boolean;
   anonymousName: string;
@@ -18,6 +20,8 @@ export default function KudoAnonymousField({
   onToggle,
   onNameChange,
 }: KudoAnonymousFieldProps) {
+  const t = useTranslations("kudos");
+
   return (
     <div
       style={{
@@ -43,7 +47,7 @@ export default function KudoAnonymousField({
           type="button"
           role="checkbox"
           aria-checked={checked}
-          aria-label="Gửi lời cám ơn và ghi nhận ẩn danh"
+          aria-label={t("anonymous.checkboxAriaLabel")}
           onClick={onToggle}
           style={{
             width: "24px",
@@ -91,7 +95,7 @@ export default function KudoAnonymousField({
             transition: "color 150ms ease",
           }}
         >
-          Gửi lời cám ơn và ghi nhận ẩn danh
+          {t("anonymous.label")}
         </span>
       </div>
 
@@ -112,7 +116,7 @@ export default function KudoAnonymousField({
             type="text"
             value={anonymousName}
             onChange={(e) => onNameChange(e.target.value)}
-            placeholder="Tên hiển thị ẩn danh (tuỳ chọn)"
+            placeholder={t("anonymous.namePlaceholder")}
             style={{
               flex: 1,
               border: "none",

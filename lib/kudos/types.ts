@@ -39,19 +39,31 @@ export interface KudoFeedItem {
   messageHtml: string;
   imageUrls: string[];
   isAnonymous: boolean;
-  /** Display name of the author: real sender name, or anonymous_name. */
-  authorName: string;
+  /**
+   * Display name of the author: real sender name, or the anonymous_name they
+   * chose. Null when the author is anonymous AND chose no display name — the
+   * consumer is responsible for substituting a translated fallback string.
+   */
+  authorName: string | null;
   recipientName: string;
   hashtags: string[];
   createdAt: string;
 }
 
+/** Stable error codes returned by server actions (kudos namespace). */
+export type KudoActionErrorCode =
+  | "unauthenticated"
+  | "fileNotFound"
+  | "invalidImageType"
+  | "invalidImage"
+  | "sendFailed";
+
 /** Result envelope for the createKudo action. */
 export type CreateKudoResult =
   | { ok: true; id: string }
-  | { ok: false; errors: string[] };
+  | { ok: false; errors: string[]; errorCodes?: KudoActionErrorCode[] };
 
 /** Result envelope for image upload. */
 export type UploadImageResult =
   | { ok: true; url: string }
-  | { ok: false; error: string };
+  | { ok: false; error: string; errorCode?: KudoActionErrorCode };

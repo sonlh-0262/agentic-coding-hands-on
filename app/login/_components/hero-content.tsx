@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { GoogleLoginButton } from "./google-login-button";
 
 export interface HeroContentProps {
@@ -12,6 +15,8 @@ export function HeroContent({
   loginLoading = false,
   loginDisabled = false,
 }: HeroContentProps) {
+  const t = useTranslations("login");
+
   return (
     /* Section container: mms_B_Bìa */
     <section
@@ -33,7 +38,7 @@ export function HeroContent({
         <div style={{ width: "1152px", height: "200px" }}>
           <Image
             src="/login/Root_Further_Logo.png"
-            alt="Root Further"
+            alt={t("hero.logoAlt")}
             width={451}
             height={200}
             style={{ objectFit: "cover", aspectRatio: "115 / 51" }}
@@ -59,9 +64,9 @@ export function HeroContent({
               margin: 0,
             }}
           >
-            Bắt đầu hành trình của bạn cùng SAA 2025.
+            {t("hero.welcomeLine1")}
             <br />
-            Đăng nhập để khám phá!
+            {t("hero.welcomeLine2")}
           </p>
 
           {/* Login button area: mms_B.3_Login */}

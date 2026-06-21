@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import LoginBackground from "./login-background";
 import LoginHeader from "./login-header";
@@ -16,6 +17,7 @@ export default function LoginClient({
 }: {
   initialError?: boolean;
 }) {
+  const t = useTranslations("login");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(initialError ?? false);
 
@@ -55,7 +57,7 @@ export default function LoginClient({
           role="alert"
           className="absolute left-1/2 top-4 z-10 -translate-x-1/2 rounded bg-red-500/90 px-4 py-2 text-sm text-white"
         >
-          Đăng nhập thất bại. Vui lòng thử lại.
+          {t("error.loginFailed")}
         </p>
       )}
       <LoginFooter />

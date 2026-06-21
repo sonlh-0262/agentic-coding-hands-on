@@ -21,6 +21,7 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { useTranslations } from "next-intl";
 import SiteHeader from "@/app/_components/home/site-header";
 import SiteFooter from "@/app/_components/home/site-footer";
 import ProfileHeroSection from "./profile-hero-section";
@@ -64,6 +65,7 @@ export default function ProfilePageClient({
   filter,
   kudoCards,
 }: ProfilePageClientProps) {
+  const t = useTranslations("profile");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
@@ -75,9 +77,16 @@ export default function ProfilePageClient({
   };
 
   // Heart toggle persists via the server action, then refreshes server data.
+  // On error, log to console (no UI error state yet — rate of failure is low).
   const handleToggleHeart = (kudoId: string) => {
     startTransition(async () => {
-      await toggleHeart(kudoId);
+      const result = await toggleHeart(kudoId);
+      if (!result.ok) {
+        const msg = result.errorCode
+          ? t(`errors.${result.errorCode}`)
+          : result.error;
+        console.error("[toggleHeart]", msg);
+      }
       router.refresh();
     });
   };
@@ -201,8 +210,8 @@ export default function ProfilePageClient({
               }}
             >
               {filter === "sent"
-                ? "Bạn chưa gửi kudo nào."
-                : "Bạn chưa nhận kudo nào."}
+                ? t("feed.emptyStateSent")
+                : t("feed.emptyStateReceived")}
             </p>
           )}
           {kudoCards.map((card) => (
@@ -228,8 +237,10 @@ export default function ProfilePageClient({
                   padding: "8px 0",
                 }}
               >
-                Đang hiển thị {kudoCards.length} kudo gần nhất /{" "}
-                {filter === "sent" ? sentKudosCount : receivedKudosCount} tổng cộng
+                {t("feed.truncationNote", {
+                  shown: kudoCards.length,
+                  total: filter === "sent" ? sentKudosCount : receivedKudosCount,
+                })}
               </p>
             )}
         </div>

@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/supabase/auth";
 import AwardSystemClient from "@/app/_components/awards/award-system-client";
 import type { HomeUser } from "@/app/_components/home/home-client";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("metadata");
+  return {
+    title: t("heThongGiai.title"),
+    description: t("heThongGiai.description"),
+  };
+}
 
 // Auth state is per-request; never serve a cached/prerendered version.
 export const dynamic = "force-dynamic";

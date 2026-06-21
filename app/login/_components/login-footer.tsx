@@ -1,4 +1,11 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export function LoginFooter() {
+  const t = useTranslations("login");
+  const tCommon = useTranslations("common");
+
   return (
     <footer
       className="absolute left-0 w-full flex items-center justify-center"
@@ -8,7 +15,7 @@ export function LoginFooter() {
         padding: "40px 90px",
         borderTop: "1px solid #2E3940",
       }}
-      aria-label="Page footer"
+      aria-label={t("footer.ariaLabel")}
     >
       <p
         className="text-white text-center"
@@ -19,7 +26,7 @@ export function LoginFooter() {
           lineHeight: "24px",
         }}
       >
-        Bản quyền thuộc về Sun* © 2025
+        {tCommon("copyright")}
       </p>
     </footer>
   );

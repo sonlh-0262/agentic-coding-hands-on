@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import KudoToolbar, { type ToolbarAction } from "./kudo-toolbar";
 import KudoMentionDropdown from "./kudo-mention-dropdown";
 import type { RecipientOption } from "./kudo-recipient-field";
@@ -13,25 +14,6 @@ interface KudoMessageEditorProps {
   onMentionsChange: (ids: string[]) => void;
   onSearchRecipients: (query: string) => Promise<RecipientOption[]>;
 }
-
-const EXEC: Record<ToolbarAction, () => void> = {
-  bold: () => document.execCommand("bold"),
-  italic: () => document.execCommand("italic"),
-  strikethrough: () => document.execCommand("strikeThrough"),
-  numberList: () => document.execCommand("insertOrderedList"),
-  quote: () => document.execCommand("formatBlock", false, "blockquote"),
-  link: () => {
-    const url = window.prompt("Nhập URL liên kết:");
-    if (!url) return;
-    // Validate before touching the live DOM — an unchecked javascript: href
-    // would be XSS-exploitable even though submit-time sanitization strips it.
-    if (!isSafeUrl(url)) {
-      window.alert("URL không hợp lệ (chỉ chấp nhận http, https, mailto).");
-      return;
-    }
-    document.execCommand("createLink", false, url);
-  },
-};
 
 /**
  * KudoMessageEditor — contentEditable rich-text editor for the kudo message.
@@ -46,11 +28,32 @@ export default function KudoMessageEditor({
   onMentionsChange,
   onSearchRecipients,
 }: KudoMessageEditorProps) {
+  const t = useTranslations("kudos");
   const editorRef = useRef<HTMLDivElement>(null);
   const [isEmpty, setIsEmpty] = useState(true);
   const [active, setActive] = useState<Set<ToolbarAction>>(new Set());
   const [mentionOptions, setMentionOptions] = useState<RecipientOption[]>([]);
   const [mentionPos, setMentionPos] = useState<{ top: number; left: number } | null>(null);
+
+  // Build the execCommand map inside the component so it captures `t`.
+  const buildExec = useCallback((): Record<ToolbarAction, () => void> => ({
+    bold: () => document.execCommand("bold"),
+    italic: () => document.execCommand("italic"),
+    strikethrough: () => document.execCommand("strikeThrough"),
+    numberList: () => document.execCommand("insertOrderedList"),
+    quote: () => document.execCommand("formatBlock", false, "blockquote"),
+    link: () => {
+      const url = window.prompt(t("message.linkPrompt"));
+      if (!url) return;
+      // Validate before touching the live DOM — an unchecked javascript: href
+      // would be XSS-exploitable even though submit-time sanitization strips it.
+      if (!isSafeUrl(url)) {
+        window.alert(t("message.invalidUrl"));
+        return;
+      }
+      document.execCommand("createLink", false, url);
+    },
+  }), [t]);
 
   const emit = useCallback(() => {
     const el = editorRef.current;
@@ -79,7 +82,7 @@ export default function KudoMessageEditor({
 
   const handleToggle = (action: ToolbarAction) => {
     editorRef.current?.focus();
-    EXEC[action]();
+    buildExec()[action]();
     syncActive();
     emit();
   };
@@ -131,7 +134,7 @@ export default function KudoMessageEditor({
     span.style.color = "#1d6fb8";
     span.style.fontWeight = "700";
     range.insertNode(span);
-    const space = document.createTextNode(" ");
+    const space = document.createTextNode(" ");
     span.after(space);
     range.setStartAfter(space);
     range.collapse(true);
@@ -160,7 +163,7 @@ export default function KudoMessageEditor({
           suppressContentEditableWarning
           role="textbox"
           aria-multiline="true"
-          aria-label="Nội dung kudo"
+          aria-label={t("message.ariaLabel")}
           onInput={handleInput}
           onKeyUp={() => void checkMention()}
           onBlur={() => setTimeout(() => setMentionPos(null), 150)}

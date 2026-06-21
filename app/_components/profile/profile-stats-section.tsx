@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * profile-stats-section.tsx
  *
@@ -9,6 +11,7 @@
  * Separator: rgba(46,57,64,1) between row 3 and row 4.
  */
 
+import { useTranslations } from "next-intl";
 import type { ProfileStats } from "./profile-mock-data";
 
 interface ProfileStatsSectionProps {
@@ -67,6 +70,8 @@ export default function ProfileStatsSection({
   stats,
   onOpenSecretBox,
 }: ProfileStatsSectionProps) {
+  const t = useTranslations("profile");
+
   return (
     <section
       style={{
@@ -100,9 +105,9 @@ export default function ProfileStatsSection({
             width: "100%",
           }}
         >
-          <StatRow label="Số kudos bạn nhận được" value={stats.kudosReceived} />
-          <StatRow label="Số kudos bạn đã gửi" value={stats.kudosSent} />
-          <StatRow label="Số tim bạn nhận được" value={stats.heartsReceived} />
+          <StatRow label={t("stats.kudosReceived")} value={stats.kudosReceived} />
+          <StatRow label={t("stats.kudosSent")} value={stats.kudosSent} />
+          <StatRow label={t("stats.heartsReceived")} value={stats.heartsReceived} />
 
           {/* Separator between group 1 and group 2 */}
           <div
@@ -113,9 +118,9 @@ export default function ProfileStatsSection({
             }}
           />
 
-          <StatRow label="Secret Box bạn đã mở" value={stats.secretBoxOpened} />
+          <StatRow label={t("stats.secretBoxOpened")} value={stats.secretBoxOpened} />
           <StatRow
-            label="Secret Box bạn chưa mở"
+            label={t("stats.secretBoxUnopened")}
             value={stats.secretBoxUnopened}
           />
 
@@ -148,7 +153,7 @@ export default function ProfileStatsSection({
               (e.currentTarget as HTMLButtonElement).style.opacity = "1";
             }}
           >
-            Mở Secret Box 🎁
+            {t("stats.openSecretBox")}
           </button>
         </div>
       </div>
