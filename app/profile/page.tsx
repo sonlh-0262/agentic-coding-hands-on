@@ -22,14 +22,24 @@ const FALLBACK_AVATAR = "/home/icon-user.svg";
  */
 const PLACEHOLDER_BADGE = { department: "Sun*", title: "Sunner" } as const;
 
-/** Format a timestamp as "HH:mm - MM/DD/YYYY" to match the design. */
+/**
+ * Format a timestamp as "HH:mm - MM/DD/YYYY" to match the design, rendered in
+ * Vietnam time (UTC+7) regardless of the server's timezone (review finding M5).
+ */
 function formatTimestamp(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "";
-  const p = (n: number) => String(n).padStart(2, "0");
-  return `${p(d.getHours())}:${p(d.getMinutes())} - ${p(d.getMonth() + 1)}/${p(
-    d.getDate(),
-  )}/${d.getFullYear()}`;
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Ho_Chi_Minh",
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour12: false,
+  }).formatToParts(d);
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? "";
+  return `${get("hour")}:${get("minute")} - ${get("month")}/${get("day")}/${get("year")}`;
 }
 
 /** Map a DB feed item into the presentational card shape (mock decorations). */

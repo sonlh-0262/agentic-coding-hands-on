@@ -13,7 +13,8 @@ dictionary (`hashtags`), the `kudos` table + `kudo_hashtags` join, and a
 | 3 | `migrations/0003_kudos_and_relations.sql` | `kudos`, `kudo_hashtags` + RLS |
 | 4 | `migrations/0004_storage_kudos_images.sql` | `kudos-images` bucket + Storage policies |
 | 5 | `migrations/0005_kudo_hearts.sql` | `kudo_hearts` (likes) + RLS — powers the Profile page hearts |
-| 6 | `seed.sql` | 8 sample Sunners + 10 predefined hashtags |
+| 6 | `migrations/0006_profile_hearts_received.sql` | `profile_hearts_received(uid)` fn — hearts-received count for the Profile page |
+| 7 | `seed.sql` | 8 sample Sunners + 10 predefined hashtags |
 
 All scripts are **idempotent** — safe to re-run.
 
@@ -32,6 +33,7 @@ for f in supabase/migrations/0001_profiles_and_trigger.sql \
          supabase/migrations/0003_kudos_and_relations.sql \
          supabase/migrations/0004_storage_kudos_images.sql \
          supabase/migrations/0005_kudo_hearts.sql \
+         supabase/migrations/0006_profile_hearts_received.sql \
          supabase/seed.sql; do
   psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f "$f"
 done

@@ -15,7 +15,7 @@
  *     background rgba(255,234,158,0.10), padding 16px 24px
  */
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type FeedDirection = "sent" | "received";
 
@@ -37,8 +37,26 @@ export default function ProfileAwardsHeader({
   onChangeFilter,
 }: ProfileAwardsHeaderProps) {
   const [open, setOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const activeLabel =
     filter === "sent" ? `Đã gửi (${sentCount})` : `Đã nhận (${receivedCount})`;
+
+  // Close the dropdown on outside click or Escape (review finding M4).
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (e: MouseEvent) => {
+      if (!dropdownRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   const handlePick = (direction: FeedDirection) => {
     setOpen(false);
@@ -113,7 +131,7 @@ export default function ProfileAwardsHeader({
           </h2>
 
           {/* Filter dropdown — Sent / Received */}
-          <div style={{ position: "relative", flexShrink: 0 }}>
+          <div ref={dropdownRef} style={{ position: "relative", flexShrink: 0 }}>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}

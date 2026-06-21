@@ -210,8 +210,28 @@ export default function ProfilePageClient({
               key={card.id}
               card={card}
               onToggleHeart={handleToggleHeart}
+              heartDisabled={isPending}
             />
           ))}
+
+          {/* Truncation note — the feed shows the most recent N; the filter
+              count is the true total (review finding I1). */}
+          {kudoCards.length > 0 &&
+            kudoCards.length <
+              (filter === "sent" ? sentKudosCount : receivedKudosCount) && (
+              <p
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  fontFamily: "var(--font-montserrat), sans-serif",
+                  fontSize: "14px",
+                  textAlign: "center",
+                  padding: "8px 0",
+                }}
+              >
+                Đang hiển thị {kudoCards.length} kudo gần nhất /{" "}
+                {filter === "sent" ? sentKudosCount : receivedKudosCount} tổng cộng
+              </p>
+            )}
         </div>
       </div>
 

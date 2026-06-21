@@ -20,7 +20,9 @@ interface ProfileKudoCardProps {
   card: ProfileKudoCardType;
   /** When provided, the heart becomes a toggle button. */
   onToggleHeart?: (kudoId: string) => void;
-  /** When provided, Copy Link copies this URL; otherwise it copies the page URL. */
+  /** Disable the heart toggle (e.g. while a previous toggle is pending). */
+  heartDisabled?: boolean;
+  /** When provided, Copy Link copies this URL; otherwise it copies a deep link to this card. */
   shareUrl?: string;
 }
 
@@ -228,15 +230,18 @@ function LinkIcon() {
 export default function ProfileKudoCard({
   card,
   onToggleHeart,
+  heartDisabled = false,
   shareUrl,
 }: ProfileKudoCardProps) {
   const isSpam = card.statusLabel === "Spam";
   const isIdol = card.statusLabel === "IDOL GIỚI TRẺ";
 
   const handleCopyLink = () => {
-    const url =
-      shareUrl ??
-      (typeof window !== "undefined" ? window.location.href : "");
+    let url = shareUrl ?? "";
+    if (!url && typeof window !== "undefined") {
+      // Deep link to this specific card via its anchor (review finding M2).
+      url = `${window.location.origin}${window.location.pathname}#kudo-${card.id}`;
+    }
     if (url && navigator?.clipboard) {
       void navigator.clipboard.writeText(url);
     }
@@ -244,9 +249,11 @@ export default function ProfileKudoCard({
 
   return (
     <article
+      id={`kudo-${card.id}`}
       style={{
         width: "680px",
         maxWidth: "100%",
+        scrollMarginTop: "96px",
         borderRadius: "24px",
         padding: "40px 40px 16px 40px",
         background: "rgba(255, 248, 225, 1)",
@@ -490,7 +497,7 @@ export default function ProfileKudoCard({
         <button
           type="button"
           onClick={onToggleHeart ? () => onToggleHeart(card.id) : undefined}
-          disabled={!onToggleHeart}
+          disabled={!onToggleHeart || heartDisabled}
           style={{
             display: "flex",
             flexDirection: "row",
@@ -499,7 +506,8 @@ export default function ProfileKudoCard({
             border: "none",
             background: "transparent",
             padding: 0,
-            cursor: onToggleHeart ? "pointer" : "default",
+            cursor: onToggleHeart && !heartDisabled ? "pointer" : "default",
+            opacity: heartDisabled ? 0.6 : 1,
             fontFamily: "var(--font-montserrat), sans-serif",
           }}
           aria-pressed={card.heartedByMe ?? false}

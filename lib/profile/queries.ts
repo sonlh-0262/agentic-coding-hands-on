@@ -22,33 +22,32 @@ export async function getProfileStats(
 ): Promise<ProfileStatsData> {
   const supabase = await createClient();
 
-  // Fetch received kudo ids (also gives the received count) and the sent count.
-  // Counting hearts-received via an embedded filter + head:true is unreliable
-  // in PostgREST (the embedded filter is not applied when no rows are
-  // materialised), so we count hearts with a top-level `in (received ids)`.
-  const [receivedRes, sentRes] = await Promise.all([
-    supabase.from("kudos").select("id").eq("recipient_id", userId),
+  // Received/sent are head+exact counts (no rows transferred). Hearts-received
+  // is counted in the DB via a function (migration 0006) — counting it via an
+  // embedded filter + head:true is unreliable in PostgREST, and fetching every
+  // received-kudo id to a `.in(...)` filter does not scale (review finding I2).
+  const [receivedRes, sentRes, heartsRes] = await Promise.all([
+    supabase
+      .from("kudos")
+      .select("id", { count: "exact", head: true })
+      .eq("recipient_id", userId),
     supabase
       .from("kudos")
       .select("id", { count: "exact", head: true })
       .eq("sender_id", userId),
+    supabase.rpc("profile_hearts_received", { uid: userId }),
   ]);
 
-  const receivedIds = (receivedRes.data ?? []).map((r) => r.id as string);
-
-  let heartsReceived = 0;
-  if (receivedIds.length > 0) {
-    const { count } = await supabase
-      .from("kudo_hearts")
-      .select("kudo_id", { count: "exact", head: true })
-      .in("kudo_id", receivedIds);
-    heartsReceived = count ?? 0;
-  }
+  // Fail loudly (consistent with getProfileFeed) so the page's try/catch can
+  // fall back to the empty state rather than silently showing wrong zeros.
+  if (receivedRes.error) throw receivedRes.error;
+  if (sentRes.error) throw sentRes.error;
+  if (heartsRes.error) throw heartsRes.error;
 
   return {
-    kudosReceived: receivedIds.length,
+    kudosReceived: receivedRes.count ?? 0,
     kudosSent: sentRes.count ?? 0,
-    heartsReceived,
+    heartsReceived: Number(heartsRes.data ?? 0),
   };
 }
 
