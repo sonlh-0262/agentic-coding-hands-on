@@ -24,7 +24,7 @@ import { updateSession } from "@/lib/supabase/proxy-session";
  * protected, so logged-out visitors are redirected to /login.
  * Account-scoped routes (e.g. /profile, /admin) stay protected by default.
  */
-const PUBLIC_PATHS = ["/", "/login", "/kudos", "/criteria"];
+const PUBLIC_PATHS = ["/", "/login", "/kudos", "/criteria", "/countdown"];
 
 export async function proxy(request: NextRequest) {
   const { response, user } = await updateSession(request);

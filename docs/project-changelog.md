@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+### 2026-06-21 — Prelaunch countdown page (`/countdown`, public)
+
+**What shipped:**
+- Public route `/countdown` — full-screen "coming soon" countdown page; `/countdown` added to `PUBLIC_PATHS` in `proxy.ts`
+- Full-screen decorative background (`public/prelaunch/bg.png`) with gradient overlay and Vietnamese title "Sự kiện sẽ bắt đầu sau"
+- LED/7-segment countdown display (DAYS / HOURS / MINUTES) rendered via `digital-numbers.woff` (`@font-face` added to `app/globals.css`); auto-refreshes every 60 seconds, freezes at 00/00/00 when the event time has passed
+- **New files:**
+  - `app/countdown/page.tsx` — server component entry point
+  - `app/_components/prelaunch/prelaunch-page.tsx` — page shell
+  - `app/_components/prelaunch/prelaunch-client.tsx` — client component (interval timer)
+  - `app/_components/prelaunch/prelaunch-countdown.tsx` — LED digit renderer
+  - `public/prelaunch/bg.png` — background image asset
+  - `public/fonts/digital-numbers.woff` — 7-segment display font
+- **Reuses:** `lib/event/countdown.ts` (`getRemaining`, `padded`, `resolveEventDatetime`) and `NEXT_PUBLIC_EVENT_DATETIME` env var — same source of truth as the homepage hero countdown
+
+---
+
 ### 2026-06-20 — Profile page (`/profile`, auth-protected)
 
 **Branch:** feat/profile-page (unmerged as of 2026-06-20)
