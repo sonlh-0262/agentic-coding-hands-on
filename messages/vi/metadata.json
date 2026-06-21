@@ -1,0 +1,26 @@
+{
+  "root": {
+    "title": "SAA 2025",
+    "description": "Sun* Annual Awards 2025"
+  },
+  "login": {
+    "title": "Đăng nhập | SAA 2025",
+    "description": "Đăng nhập để bắt đầu hành trình cùng SAA 2025."
+  },
+  "countdown": {
+    "title": "Sự kiện sẽ bắt đầu sau | SAA 2025",
+    "description": "Đếm ngược tới Sun* Annual Awards 2025."
+  },
+  "heThongGiai": {
+    "title": "Hệ thống giải thưởng | SAA 2025",
+    "description": "Khám phá 6 hạng mục giải thưởng danh giá của Sun* Annual Awards 2025."
+  },
+  "kudos": {
+    "title": "Sun* Kudos | SAA 2025",
+    "description": "Ghi nhận và cảm ơn đồng nghiệp qua Sun* Kudos — tính năng mới của SAA 2025."
+  },
+  "profile": {
+    "title": "Hồ sơ của tôi | SAA 2025",
+    "description": "Xem thống kê Kudos và hành trình của bạn tại SAA 2025."
+  }
+}

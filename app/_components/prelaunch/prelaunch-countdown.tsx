@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { padded } from "@/lib/event/countdown";
 import type { Remaining } from "@/lib/event/countdown";
 
@@ -121,13 +124,14 @@ export default function PrelaunchCountdown({
   remaining,
 }: PrelaunchCountdownProps) {
   const { days, hours, minutes } = remaining;
+  const t = useTranslations("home");
 
   return (
     <div
       className="flex flex-col items-center"
       style={{ gap: "24px" }}
       role="timer"
-      aria-label="Đếm ngược tới sự kiện"
+      aria-label={t("countdown.ariaLabel")}
     >
       {/* Title */}
       <p
@@ -141,16 +145,16 @@ export default function PrelaunchCountdown({
           margin: 0,
         }}
       >
-        Sự kiện sẽ bắt đầu sau
+        {t("countdown.title")}
       </p>
 
       {/* Countdown tiles row */}
       <div className="flex flex-row items-start" style={{ gap: "60px" }}>
         {/* Tiles are 2-digit LED displays (spec range 00–99). Cap days at 99 so an
             out-of-range value shows a visible "99" instead of silently truncating. */}
-        <LedCountdownTile value={padded(Math.min(days, 99))} label="DAYS" />
-        <LedCountdownTile value={padded(hours)} label="HOURS" />
-        <LedCountdownTile value={padded(minutes)} label="MINUTES" />
+        <LedCountdownTile value={padded(Math.min(days, 99))} label={t("countdown.days")} />
+        <LedCountdownTile value={padded(hours)} label={t("countdown.hours")} />
+        <LedCountdownTile value={padded(minutes)} label={t("countdown.minutes")} />
       </div>
     </div>
   );

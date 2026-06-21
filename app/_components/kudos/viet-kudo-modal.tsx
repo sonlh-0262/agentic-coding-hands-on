@@ -8,6 +8,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import KudoRecipientField, {
   type RecipientOption,
@@ -25,11 +26,6 @@ import type {
 } from "@/lib/kudos/types";
 import { isAllowedImageType, validateKudoInput } from "@/lib/kudos/validation";
 import { sanitizeKudoHtml } from "@/lib/kudos/sanitize-html";
-
-const MESSAGE_PLACEHOLDER =
-  "Hãy gửi gắm lời cám ơn và ghi nhận đến đồng đội tại đây nhé!";
-const MESSAGE_HINT =
-  'Bạn có thể "@ + tên" để nhắc tới đồng nghiệp khác';
 
 export interface VietKudoModalProps {
   open: boolean;
@@ -68,6 +64,8 @@ export default function VietKudoModal({
   onUploadImage,
   onSubmit,
 }: VietKudoModalProps) {
+  const t = useTranslations("kudos");
+
   const mounted = useSyncExternalStore(
     (cb) => {
       cb();
@@ -171,7 +169,7 @@ export default function VietKudoModal({
     e.target.value = ""; // allow re-selecting the same file
     if (!file) return;
     if (!isAllowedImageType(file.type)) {
-      setErrors(["Định dạng tệp không hợp lệ (chỉ chấp nhận ảnh)"]);
+      setErrors([t("modal.invalidImageType")]);
       return;
     }
     if (images.length >= 5) return;
@@ -183,7 +181,8 @@ export default function VietKudoModal({
       ]);
       setErrors([]);
     } else {
-      setErrors([result.error]);
+      // Prefer translating a stable errorCode when available.
+      setErrors([result.errorCode ? t(`errors.${result.errorCode}`) : result.error]);
     }
   };
 
@@ -191,7 +190,12 @@ export default function VietKudoModal({
     const input = buildInput();
     const check = validateKudoInput(input);
     if (!check.ok) {
-      setErrors(check.errors);
+      // Translate structured error keys at the call site.
+      setErrors(
+        check.errorKeys.map((e) =>
+          "params" in e ? t(e.key, e.params) : t(e.key),
+        ),
+      );
       return;
     }
     setSubmitting(true);
@@ -202,7 +206,12 @@ export default function VietKudoModal({
       resetForm();
       onClose();
     } else {
-      setErrors(result.errors);
+      // Prefer translating stable errorCodes when available; fall back to raw strings.
+      if (result.errorCodes && result.errorCodes.length > 0) {
+        setErrors(result.errorCodes.map((code) => t(`errors.${code}`)));
+      } else {
+        setErrors(result.errors);
+      }
     }
   };
 
@@ -256,7 +265,7 @@ export default function VietKudoModal({
             width: "100%",
           }}
         >
-          Gửi lời cám ơn và ghi nhận đến đồng đội
+          {t("modal.title")}
         </h2>
 
         <KudoRecipientField
@@ -276,8 +285,8 @@ export default function VietKudoModal({
         <KudoTitleField value={title} onChange={setTitle} />
 
         <KudoMessageEditor
-          placeholder={MESSAGE_PLACEHOLDER}
-          hint={MESSAGE_HINT}
+          placeholder={t("modal.messagePlaceholder")}
+          hint={t("modal.messageHint")}
           onChange={setMessageHtml}
           onMentionsChange={setMentionIds}
           onSearchRecipients={onSearchRecipients}
@@ -350,7 +359,7 @@ export default function VietKudoModal({
         >
           <button
             type="button"
-            aria-label="Hủy"
+            aria-label={t("modal.cancel")}
             onClick={handleClose}
             disabled={submitting}
             style={{
@@ -375,7 +384,7 @@ export default function VietKudoModal({
                 color: "rgba(0, 16, 26, 1)",
               }}
             >
-              Hủy
+              {t("modal.cancel")}
             </span>
             <Image
               src="/viet-kudo/Close.svg"
@@ -388,7 +397,7 @@ export default function VietKudoModal({
 
           <button
             type="button"
-            aria-label="Gửi"
+            aria-label={t("modal.submit")}
             onClick={handleSubmit}
             disabled={!isValid || submitting}
             style={{
@@ -416,7 +425,7 @@ export default function VietKudoModal({
                 color: "rgba(0, 16, 26, 1)",
               }}
             >
-              {submitting ? "Đang gửi..." : "Gửi"}
+              {submitting ? t("modal.submitting") : t("modal.submit")}
             </span>
             {!submitting && (
               <Image

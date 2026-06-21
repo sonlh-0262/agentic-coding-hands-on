@@ -1,0 +1,45 @@
+{
+  "hero": {
+    "avatarAlt": "Ảnh đại diện của {name}",
+    "badgeLocked": "Huy hiệu chưa mở khóa",
+    "badgeAlt": "Huy hiệu {index}",
+    "iconCollectionTitle": "Bộ sưu tập icon của tôi"
+  },
+  "stats": {
+    "kudosReceived": "Số kudos bạn nhận được",
+    "kudosSent": "Số kudos bạn đã gửi",
+    "heartsReceived": "Số tim bạn nhận được",
+    "secretBoxOpened": "Secret Box bạn đã mở",
+    "secretBoxUnopened": "Secret Box bạn chưa mở",
+    "openSecretBox": "Mở Secret Box 🎁"
+  },
+  "awards": {
+    "filterSent": "Đã gửi ({count})",
+    "filterReceived": "Đã nhận ({count})",
+    "filterAriaLabel": "Lọc kudos — đang hiển thị {activeLabel}"
+  },
+  "feed": {
+    "emptyStateSent": "Bạn chưa gửi kudo nào.",
+    "emptyStateReceived": "Bạn chưa nhận kudo nào.",
+    "truncationNote": "Đang hiển thị {shown} kudo gần nhất / {total} tổng cộng"
+  },
+  "kudoCard": {
+    "avatarAlt": "Ảnh đại diện của {name}",
+    "imageAlt": "Ảnh {index}",
+    "heartAdd": "Thích kudo này",
+    "heartRemove": "Bỏ thích kudo này",
+    "copyLinkLabel": "Sao chép liên kết",
+    "copyLinkText": "Copy Link"
+  },
+  "status": {
+    "spam": "Spam",
+    "idolGioiTre": "IDOL GIỚI TRẺ"
+  },
+  "badge": {
+    "legendHero": "Legend Hero",
+    "superHero": "Super Hero"
+  },
+  "errors": {
+    "unauthenticated": "Bạn cần đăng nhập"
+  }
+}

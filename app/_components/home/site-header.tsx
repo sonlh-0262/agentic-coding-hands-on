@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./language-switcher";
 import NotificationButton from "./notification-button";
 import AccountMenu from "./account-menu";
@@ -20,6 +21,7 @@ interface SiteHeaderProps {
  */
 export default function SiteHeader({ user }: SiteHeaderProps) {
   const pathname = usePathname();
+  const t = useTranslations("home");
   return (
     <header
       className="fixed top-0 left-0 w-full z-50 flex flex-row items-center justify-between"
@@ -35,7 +37,7 @@ export default function SiteHeader({ user }: SiteHeaderProps) {
         {/* Logo */}
         <Link
           href="/"
-          aria-label="SAA 2025 homepage"
+          aria-label={t("header.logoAriaLabel")}
           className="flex items-center"
         >
           <div
@@ -44,7 +46,7 @@ export default function SiteHeader({ user }: SiteHeaderProps) {
           >
             <Image
               src="/home/logo.png"
-              alt="SAA 2025 logo"
+              alt={t("header.logoAlt")}
               width={52}
               height={48}
               className="object-contain"
@@ -57,7 +59,7 @@ export default function SiteHeader({ user }: SiteHeaderProps) {
         <nav
           className="flex flex-row items-center"
           style={{ gap: "24px" }}
-          aria-label="Main navigation"
+          aria-label={t("header.mainNavAriaLabel")}
         >
           {NAV_LINKS.map((link) => {
             const isActive = pathname === link.href;
@@ -79,7 +81,7 @@ export default function SiteHeader({ user }: SiteHeaderProps) {
                 }}
                 aria-current={isActive ? "page" : undefined}
               >
-                {link.label}
+                {t(`header.nav.${link.labelKey}`)}
               </Link>
             );
           })}
@@ -99,7 +101,7 @@ export default function SiteHeader({ user }: SiteHeaderProps) {
           /* Logged-out: login affordance */
           <Link
             href="/login"
-            aria-label="Login"
+            aria-label={t("header.loginAriaLabel")}
             className="flex items-center justify-center rounded-[4px] transition-[background-color,border-color] duration-200 hover:bg-white/[0.08]"
             style={{
               width: "40px",
@@ -110,7 +112,7 @@ export default function SiteHeader({ user }: SiteHeaderProps) {
           >
             <Image
               src="/home/icon-user.svg"
-              alt="Login"
+              alt={t("header.loginAlt")}
               width={24}
               height={24}
             />

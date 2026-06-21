@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+### 2026-06-21 — App-wide internationalization (vi/en, cookie-based)
+
+**What shipped:**
+- Cookie-based locale switching (`NEXT_LOCALE` cookie); no URL-prefix routing — all existing routes unchanged
+- Default locale: Vietnamese (`vi`); English (`en`) fully supported
+- New dependency: `next-intl@4.13`; `next.config.ts` updated with next-intl plugin
+- **New i18n config files:**
+  - `i18n/locales.ts` — locale constants and type
+  - `i18n/request.ts` — per-request locale resolution (reads `NEXT_LOCALE` cookie)
+  - `i18n/actions.ts` — `setLocale` server action (writes cookie, triggers `revalidatePath`)
+- **Message catalogs** (`messages/{vi,en}/`): 7 namespace files per locale (`common`, `metadata`, `home`, `login`, `kudos`, `awards`, `profile`) — 217 keys, vi/en parity
+- `app/layout.tsx` wired with `NextIntlClientProvider`, dynamic `<html lang={locale}>`, and `generateMetadata` using translated strings
+- ~50 components migrated to `useTranslations` / `getTranslations` — all pages (home, login, kudos, awards, profile) now fully translated
+- Home page language-switcher dropdown (VN/EN flags) restyled to MoMorph design and wired to `setLocale`; `public/home/flag-en.svg` added
+
+**How to add a new translation:**
+1. Add keys to `messages/vi/<namespace>.json` and `messages/en/<namespace>.json` (keep parity)
+2. In server components: `const t = await getTranslations('<namespace>')`; in client components: `const t = useTranslations('<namespace>')`
+3. No route changes required — locale is resolved from the cookie automatically
+
+---
+
 ### 2026-06-21 — Prelaunch countdown page (`/countdown`, public)
 
 **What shipped:**

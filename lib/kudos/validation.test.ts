@@ -311,3 +311,49 @@ test("integration: validation with HTML sanitization (ID-12, ID-13)", async (t) 
     }
   );
 });
+
+test("integration: errorKeys i18n descriptor structure (i18n migration)", async (t) => {
+  await t.test("errorKeys array maps to validation error keys", () => {
+    const input: KudoInput = {
+      recipientId: "",
+      title: "",
+      messageHtml: "",
+      mentionIds: [],
+      hashtagIds: [],
+      imageUrls: Array.from({ length: MAX_IMAGES + 1 }, (_, i) => `https://example.com/img${i}.jpg`),
+      isAnonymous: false,
+      anonymousName: "",
+    };
+    const result = validateKudoInput(input);
+    assert.strictEqual(result.ok, false);
+    // Verify errorKeys has same length as errors
+    assert.strictEqual(result.errorKeys.length, result.errors.length);
+    assert(result.errorKeys.length > 0);
+    // Verify each errorKey has required 'key' field
+    result.errorKeys.forEach((ek) => {
+      assert(ek.key, "errorKey must have a 'key' field");
+      assert(ek.key.startsWith("errors."), "errorKey.key must start with 'errors.'");
+    });
+  });
+
+  await t.test("errorKeys with params include max field", () => {
+    const input: KudoInput = {
+      recipientId: "user-123",
+      title: "Great",
+      messageHtml: "<p>Content</p>",
+      mentionIds: [],
+      hashtagIds: ["tag1"],
+      imageUrls: Array.from({ length: MAX_IMAGES + 1 }, (_, i) => `https://example.com/img${i}.jpg`),
+      isAnonymous: false,
+      anonymousName: "",
+    };
+    const result = validateKudoInput(input);
+    assert.strictEqual(result.ok, false);
+    const imageMaxError = result.errorKeys.find(
+      (ek) => ek.key === "errors.imageMax"
+    ) as { key: "errors.imageMax"; params: { max: number } } | undefined;
+    assert(imageMaxError, "should have imageMax error");
+    assert("params" in imageMaxError, "imageMax error should have params");
+    assert.strictEqual(imageMaxError.params.max, MAX_IMAGES);
+  });
+});

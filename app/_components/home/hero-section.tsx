@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import CountdownTimer from "./countdown-timer";
 import { formatEventDateTime, type Remaining } from "@/lib/event/countdown";
 import { EVENT_INFO } from "./home-data";
@@ -22,11 +25,12 @@ export default function HeroSection({
   // Derive the displayed date/time from the same env-driven value as the
   // countdown so they never diverge.
   const { date, time } = formatEventDateTime(eventDatetime);
+  const t = useTranslations("home");
   return (
     <section
       className="relative w-full overflow-hidden"
       style={{ minHeight: "100vh" }}
-      aria-label="Hero section"
+      aria-label={t("hero.sectionAriaLabel")}
     >
       {/* Background */}
       <div
@@ -79,7 +83,7 @@ export default function HeroSection({
                 lineHeight: "32px",
               }}
             >
-              Coming soon
+              {t("hero.comingSoon")}
             </p>
           )}
 
@@ -100,7 +104,7 @@ export default function HeroSection({
                   letterSpacing: "0.15px",
                 }}
               >
-                Thời gian:
+                {t("hero.timeLabel")}
               </span>
               <span
                 className="font-bold"
@@ -125,7 +129,7 @@ export default function HeroSection({
                   letterSpacing: "0.15px",
                 }}
               >
-                Địa điểm:
+                {t("hero.venueLabel")}
               </span>
               <span
                 className="font-bold"
@@ -151,7 +155,7 @@ export default function HeroSection({
               letterSpacing: "0.5px",
             }}
           >
-            {EVENT_INFO.livestream}
+            {t("hero.livestream")}
           </p>
         </div>
 
@@ -173,7 +177,7 @@ export default function HeroSection({
               minWidth: "276px",
             }}
           >
-            ABOUT AWARDS
+            {t("hero.aboutAwards")}
             <Image
               src="/home/icon-arrow.svg"
               alt=""
@@ -199,7 +203,7 @@ export default function HeroSection({
               height: "60px",
             }}
           >
-            ABOUT KUDOS
+            {t("hero.aboutKudos")}
             <Image
               src="/home/icon-arrow.svg"
               alt=""

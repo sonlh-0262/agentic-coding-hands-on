@@ -21,8 +21,11 @@ export interface ProfileStatsData {
 /** A kudo in the profile feed, with heart aggregates for the current user. */
 export interface ProfileFeedKudo {
   id: string;
-  /** Display name of the author (anonymous kudos show their anonymous name). */
-  senderName: string;
+  /**
+   * Display name of the author. Null when anonymous AND no custom name was
+   * given — consumer must substitute a translated fallback.
+   */
+  senderName: string | null;
   /** Author avatar URL (null for anonymous or missing). */
   senderAvatar: string | null;
   recipientName: string;
@@ -37,7 +40,10 @@ export interface ProfileFeedKudo {
   heartedByMe: boolean;
 }
 
+/** Stable error codes returned by server actions (profile namespace). */
+export type ProfileActionErrorCode = "unauthenticated";
+
 /** Result of toggling a heart. */
 export type ToggleHeartResult =
   | { ok: true; hearted: boolean; count: number }
-  | { ok: false; error: string };
+  | { ok: false; error: string; errorCode?: ProfileActionErrorCode };

@@ -30,12 +30,13 @@ export interface ProfileStats {
 export interface UserBadge {
   /** e.g. "CEVC10" */
   department: string;
-  /** e.g. "Super Hero" | "Legend Hero" */
+  /** Display title — either a catalog key (e.g. "legendHero") or a raw string */
   title: string;
 }
 
 export interface ProfileKudoSender {
-  name: string;
+  /** Null when sender is anonymous with no chosen display name. */
+  name: string | null;
   avatarSrc: string;
   badge: UserBadge;
 }
@@ -46,7 +47,7 @@ export interface ProfileKudoRecipient {
   badge: UserBadge;
 }
 
-export type KudoStatusLabel = "Spam" | "IDOL GIỚI TRẺ" | null;
+export type KudoStatusLabel = "spam" | "idolGioiTre" | null;
 
 export interface ProfileKudoCard {
   id: string;
@@ -71,7 +72,7 @@ export const PROFILE_USER_NAME = "Huỳnh Dương Xuân Nhật";
 
 export const PROFILE_DEPARTMENT = "CEVC3";
 
-export const PROFILE_TITLE: UserBadge["title"] = "Legend Hero";
+export const PROFILE_TITLE: UserBadge["title"] = "legendHero";
 
 /** 6 icon badge slots B2–B7; all placeholder (dark gray #323231) in the design */
 export const PROFILE_ICON_SLOTS: IconSlot[] = [
@@ -103,15 +104,15 @@ export const PROFILE_KUDO_CARDS: ProfileKudoCard[] = [
     sender: {
       name: "Huỳnh Dương Xuân Nhật",
       avatarSrc: PLACEHOLDER_AVATAR,
-      badge: { department: "CEVC10", title: "Super Hero" },
+      badge: { department: "CEVC10", title: "superHero" },
     },
     recipient: {
       name: "Huỳnh Dương Xuân Nhật",
       avatarSrc: PLACEHOLDER_AVATAR,
-      badge: { department: "CEVC10", title: "Super Hero" },
+      badge: { department: "CEVC10", title: "superHero" },
     },
     timestamp: "10:00 - 10/30/2025",
-    statusLabel: "Spam",
+    statusLabel: "spam",
     message:
       "Cảm ơn người em bình thường nhưng phi thường :D Cảm ơn sự chăm chỉ, cần mẫn của em đã tạo động lực rất nhiều cho team, để luôn nhắc mình luôn phải nỗ lực hơn nữa trong công việc. <3 và cuộc sống...",
     images: [SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE],
@@ -123,15 +124,15 @@ export const PROFILE_KUDO_CARDS: ProfileKudoCard[] = [
     sender: {
       name: "Huỳnh Dương Xuân Nhật",
       avatarSrc: PLACEHOLDER_AVATAR,
-      badge: { department: "CEVC10", title: "Super Hero" },
+      badge: { department: "CEVC10", title: "superHero" },
     },
     recipient: {
       name: "Huỳnh Dương Xuân Nhật",
       avatarSrc: PLACEHOLDER_AVATAR,
-      badge: { department: "CEVC10", title: "Super Hero" },
+      badge: { department: "CEVC10", title: "superHero" },
     },
     timestamp: "10:00 - 10/30/2025",
-    statusLabel: "Spam",
+    statusLabel: "spam",
     message:
       "Cảm ơn người em bình thường nhưng phi thường :D Cảm ơn sự chăm chỉ, cần mẫn của em đã tạo động lực rất nhiều cho team, để luôn nhắc mình luôn phải nỗ lực hơn nữa trong công việc. <3 và cuộc sống...",
     images: [SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE],
@@ -143,15 +144,15 @@ export const PROFILE_KUDO_CARDS: ProfileKudoCard[] = [
     sender: {
       name: "Huỳnh Dương Xuân Nhật",
       avatarSrc: PLACEHOLDER_AVATAR,
-      badge: { department: "CEVC10", title: "Super Hero" },
+      badge: { department: "CEVC10", title: "superHero" },
     },
     recipient: {
       name: "Huỳnh Dương Xuân Nhật",
       avatarSrc: PLACEHOLDER_AVATAR,
-      badge: { department: "CEVC10", title: "Super Hero" },
+      badge: { department: "CEVC10", title: "superHero" },
     },
     timestamp: "10:00 - 10/30/2025",
-    statusLabel: "IDOL GIỚI TRẺ",
+    statusLabel: "idolGioiTre",
     message:
       "Cảm ơn người em bình thường nhưng phi thường :D Cảm ơn sự chăm chỉ, cần mẫn của em đã tạo động lực rất nhiều cho team, để luôn nhắc mình luôn phải nỗ lực hơn nữa trong công việc. <3 và cuộc sống...",
     images: [SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE],
@@ -163,15 +164,15 @@ export const PROFILE_KUDO_CARDS: ProfileKudoCard[] = [
     sender: {
       name: "Huỳnh Dương Xuân Nhật",
       avatarSrc: PLACEHOLDER_AVATAR,
-      badge: { department: "CEVC10", title: "Super Hero" },
+      badge: { department: "CEVC10", title: "superHero" },
     },
     recipient: {
       name: "Huỳnh Dương Xuân Nhật",
       avatarSrc: PLACEHOLDER_AVATAR,
-      badge: { department: "CEVC10", title: "Super Hero" },
+      badge: { department: "CEVC10", title: "superHero" },
     },
     timestamp: "10:00 - 10/30/2025",
-    statusLabel: "IDOL GIỚI TRẺ",
+    statusLabel: "idolGioiTre",
     message:
       "Cảm ơn người em bình thường nhưng phi thường :D Cảm ơn sự chăm chỉ, cần mẫn của em đã tạo động lực rất nhiều cho team, để luôn nhắc mình luôn phải nỗ lực hơn nữa trong công việc. <3 và cuộc sống...",
     images: [SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE, SAMPLE_IMAGE],

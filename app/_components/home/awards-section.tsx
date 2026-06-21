@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import AwardCard from "./award-card";
 import { AWARD_CARDS } from "./home-data";
 
@@ -7,6 +10,7 @@ import { AWARD_CARDS } from "./home-data";
  * Desktop: 3 cols. Tablet/mobile: 2 cols → 1 col on small.
  */
 export default function AwardsSection() {
+  const t = useTranslations("home");
   return (
     <section
       className="w-full"
@@ -29,7 +33,7 @@ export default function AwardsSection() {
               margin: 0,
             }}
           >
-            Sun* annual awards 2025
+            {t("awards.caption")}
           </p>
 
           {/* Divider */}
@@ -55,7 +59,7 @@ export default function AwardsSection() {
               margin: 0,
             }}
           >
-            Hệ thống giải thưởng
+            {t("awards.title")}
           </h2>
         </div>
 

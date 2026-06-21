@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export interface RecipientOption {
   id: string;
@@ -32,6 +33,8 @@ export default function KudoRecipientField({
   onSelect,
   onToggleOpen,
 }: KudoRecipientFieldProps) {
+  const t = useTranslations("kudos");
+
   return (
     <div
       style={{
@@ -63,7 +66,7 @@ export default function KudoRecipientField({
             color: "rgba(0, 16, 26, 1)",
           }}
         >
-          Người nhận
+          {t("recipient.label")}
         </span>
         <span
           style={{
@@ -85,7 +88,7 @@ export default function KudoRecipientField({
           type="button"
           aria-haspopup="listbox"
           aria-expanded={isOpen}
-          aria-label="Tìm kiếm người nhận"
+          aria-label={t("recipient.searchAriaLabel")}
           onClick={onToggleOpen}
           style={{
             display: "flex",
@@ -115,7 +118,7 @@ export default function KudoRecipientField({
               whiteSpace: "nowrap",
             }}
           >
-            {value ? value.name : "Tìm kiếm"}
+            {value ? value.name : t("recipient.searchPlaceholder")}
           </span>
           <Image
             src="/viet-kudo/Down.svg"
@@ -135,7 +138,7 @@ export default function KudoRecipientField({
         {isOpen && (
           <div
             role="listbox"
-            aria-label="Danh sách người nhận"
+            aria-label={t("recipient.listAriaLabel")}
             style={{
               position: "absolute",
               top: "calc(100% + 4px)",
@@ -154,7 +157,7 @@ export default function KudoRecipientField({
             <div style={{ padding: "8px 16px", borderBottom: "1px solid #E5E5E5" }}>
               <input
                 type="text"
-                placeholder="Tìm kiếm"
+                placeholder={t("recipient.searchPlaceholder")}
                 value={searchText}
                 onChange={(e) => onSearchChange(e.target.value)}
                 style={{
@@ -178,7 +181,7 @@ export default function KudoRecipientField({
                   color: "#999",
                 }}
               >
-                Không có kết quả
+                {t("recipient.noResults")}
               </div>
             ) : (
               options.map((opt) => (

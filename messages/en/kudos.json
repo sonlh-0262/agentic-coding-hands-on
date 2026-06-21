@@ -1,0 +1,85 @@
+{
+  "page": {
+    "title": "Sun* Kudos",
+    "writeKudo": "Write Kudo",
+    "emptyFeed": "No kudos yet. Be the first to send a thank-you!"
+  },
+  "modal": {
+    "title": "Send appreciation and recognition to your teammates",
+    "messagePlaceholder": "Send your appreciation and recognition to your teammates here!",
+    "messageHint": "You can use \"@ + name\" to mention other colleagues",
+    "cancel": "Cancel",
+    "submit": "Send",
+    "submitting": "Sending...",
+    "invalidImageType": "Invalid file type (only images are accepted)"
+  },
+  "recipient": {
+    "label": "Recipient",
+    "searchPlaceholder": "Search",
+    "searchAriaLabel": "Search for a recipient",
+    "listAriaLabel": "Recipient list",
+    "noResults": "No results"
+  },
+  "titleField": {
+    "label": "Title",
+    "placeholder": "Give your teammate a title",
+    "helperText": "Example: The person who motivates me.\nThis title will be displayed as your Kudos headline."
+  },
+  "message": {
+    "ariaLabel": "Kudo message",
+    "linkPrompt": "Enter link URL:",
+    "invalidUrl": "Invalid URL (only http, https, mailto are accepted)."
+  },
+  "hashtag": {
+    "label": "Hashtag",
+    "maxCount": "Max {count}",
+    "addAriaLabel": "Add hashtag",
+    "dropdownAriaLabel": "Select hashtag",
+    "noOptions": "No more hashtags",
+    "removeAriaLabel": "Remove hashtag {label}",
+    "removeAlt": "Remove {label}"
+  },
+  "image": {
+    "label": "Image",
+    "maxCount": "Max {count}",
+    "addAriaLabel": "Add image",
+    "removeAriaLabel": "Remove image",
+    "removeAlt": "Remove",
+    "thumbnailAlt": "Attached image"
+  },
+  "anonymous": {
+    "checkboxAriaLabel": "Send appreciation and recognition anonymously",
+    "label": "Send appreciation and recognition anonymously",
+    "namePlaceholder": "Anonymous display name (optional)"
+  },
+  "toolbar": {
+    "ariaLabel": "Text formatting",
+    "bold": "Bold",
+    "italic": "Italic",
+    "strikethrough": "Strikethrough",
+    "numberList": "Number list",
+    "link": "Link",
+    "quote": "Quote"
+  },
+  "mention": {
+    "dropdownAriaLabel": "Mention suggestions"
+  },
+  "feed": {
+    "from": "From",
+    "to": "to",
+    "anonymous": "Anonymous"
+  },
+  "errors": {
+    "recipientRequired": "Recipient is required",
+    "titleRequired": "Title is required",
+    "messageRequired": "Message is required",
+    "hashtagRequired": "At least one hashtag is required",
+    "hashtagMax": "Maximum {max} hashtags",
+    "imageMax": "Maximum {max} images",
+    "unauthenticated": "You need to be logged in",
+    "fileNotFound": "File not found",
+    "invalidImageType": "Invalid file type",
+    "invalidImage": "Invalid image",
+    "sendFailed": "Failed to send kudo"
+  }
+}

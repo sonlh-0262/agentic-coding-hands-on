@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export interface LanguageSwitcherProps {
   onClick?: () => void;
@@ -10,6 +13,9 @@ export interface LoginHeaderProps {
 }
 
 export function LanguageSwitcher({ onClick }: LanguageSwitcherProps) {
+  const t = useTranslations("login");
+  const tCommon = useTranslations("common");
+
   return (
     <button
       type="button"
@@ -20,13 +26,13 @@ export function LanguageSwitcher({ onClick }: LanguageSwitcherProps) {
         transition-[background-color] duration-200 ease-[ease]
         hover:bg-white/[0.08]
       "
-      aria-label="Switch language"
+      aria-label={tCommon("language.switch")}
     >
       {/* Left: flag + label */}
       <span className="flex items-center gap-1">
         <Image
           src="/login/VN.svg"
-          alt="Vietnamese flag"
+          alt={t("header.flagVnAlt")}
           width={24}
           height={24}
         />
@@ -34,14 +40,14 @@ export function LanguageSwitcher({ onClick }: LanguageSwitcherProps) {
           className="text-white text-base font-bold leading-6 tracking-[0.15px]"
           style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
         >
-          VN
+          {tCommon("language.vn")}
         </span>
       </span>
 
       {/* Right: chevron */}
       <Image
         src="/login/Down.svg"
-        alt="Expand"
+        alt={t("header.expandAlt")}
         width={24}
         height={24}
       />
@@ -50,6 +56,8 @@ export function LanguageSwitcher({ onClick }: LanguageSwitcherProps) {
 }
 
 export default function LoginHeader({ onLanguageClick }: LoginHeaderProps) {
+  const t = useTranslations("login");
+
   return (
     <header
       className="absolute top-0 left-0 w-full z-[1] flex flex-row items-center justify-between"
@@ -60,11 +68,11 @@ export default function LoginHeader({ onLanguageClick }: LoginHeaderProps) {
       }}
     >
       {/* Logo */}
-      <Link href="/" aria-label="Go to homepage" className="flex items-center">
+      <Link href="/" aria-label={t("header.homepageAriaLabel")} className="flex items-center">
         <div className="w-[52px] h-14 flex items-center justify-center">
           <Image
             src="/login/Logo.png"
-            alt="SAA 2025 logo"
+            alt={t("header.logoAlt")}
             width={48}
             height={48}
             className="object-contain"

@@ -1,13 +1,18 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { resolveEventDatetime } from "@/lib/event/countdown";
 import PrelaunchClient from "@/app/_components/prelaunch/prelaunch-client";
 
 // The countdown is clock-dependent; never serve a cached/prerendered frame.
 export const dynamic = "force-dynamic";
 
-export const metadata = {
-  title: "Sự kiện sẽ bắt đầu sau | SAA 2025",
-  description: "Đếm ngược tới Sun* Annual Awards 2025.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("metadata");
+  return {
+    title: t("countdown.title"),
+    description: t("countdown.description"),
+  };
+}
 
 /**
  * Prelaunch countdown page (`/countdown`) — public "coming soon" screen.

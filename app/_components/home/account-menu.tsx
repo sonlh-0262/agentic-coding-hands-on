@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslations } from "next-intl";
 import type { HomeUser } from "./home-client";
 
 interface AccountMenuProps {
@@ -16,6 +17,7 @@ interface AccountMenuProps {
 export default function AccountMenu({ user }: AccountMenuProps) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("home");
 
   const close = useCallback(() => setOpen(false), []);
 
@@ -44,7 +46,7 @@ export default function AccountMenu({ user }: AccountMenuProps) {
         type="button"
         aria-haspopup="menu"
         aria-expanded={open}
-        aria-label={`Account menu for ${user.name}`}
+        aria-label={t("accountMenu.menuAriaLabel", { name: user.name })}
         onClick={() => setOpen((v) => !v)}
         className="flex items-center justify-center rounded-[4px] transition-[background-color,border-color] duration-200 hover:bg-white/[0.08]"
         style={{
@@ -118,7 +120,7 @@ export default function AccountMenu({ user }: AccountMenuProps) {
             style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
             onClick={close}
           >
-            Hồ sơ
+            {t("accountMenu.profile")}
           </a>
 
           {/* Admin Dashboard — conditional */}
@@ -130,7 +132,7 @@ export default function AccountMenu({ user }: AccountMenuProps) {
               style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
               onClick={close}
             >
-              Admin Dashboard
+              {t("accountMenu.adminDashboard")}
             </a>
           )}
 
@@ -139,13 +141,14 @@ export default function AccountMenu({ user }: AccountMenuProps) {
             <button
               type="submit"
               role="menuitem"
+              aria-label={t("accountMenu.signOutAriaLabel")}
               className="w-full text-left flex items-center px-4 py-3 text-sm font-bold hover:bg-white/[0.08] transition-colors duration-150"
               style={{
                 fontFamily: "var(--font-montserrat), sans-serif",
                 color: "rgba(255, 234, 158, 1)",
               }}
             >
-              Đăng xuất
+              {t("accountMenu.signOut")}
             </button>
           </form>
         </div>

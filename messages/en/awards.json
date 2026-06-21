@@ -1,0 +1,73 @@
+{
+  "hero": {
+    "subtitle": "Sun* Annual Awards 2025",
+    "title": "SAA 2025 Award System"
+  },
+  "nav": {
+    "ariaLabel": "Awards navigation"
+  },
+  "quantity": {
+    "label": "Number of awards:"
+  },
+  "value": {
+    "label": "Award value:",
+    "or": "Or"
+  },
+  "items": {
+    "top-talent": {
+      "navLabel": "Top Talent",
+      "title": "Top Talent",
+      "description": "The Top Talent award honours outstanding all-round individuals — those who consistently demonstrate strong professional expertise, exceptional work performance, and always deliver value beyond expectations, highly regarded by both clients and teammates. With a spirit of readiness to take on any mission the organisation assigns, they are a constant source of inspiration, driving motivation and creating a positive influence on the entire team.",
+      "quantityUnit": "Individuals",
+      "values": [
+        { "note": "per award" }
+      ]
+    },
+    "top-project": {
+      "navLabel": "Top Project",
+      "title": "Top Project",
+      "description": "The Top Project award honours outstanding project teams that deliver business results exceeding expectations, with optimised operational efficiency and dedicated commitment. These are projects with high technical complexity, excellent resource and cost optimisation, valuable ideas proposed to clients, superior profitability, and positive client feedback. Team members strictly adhere to internal development standards throughout the project, setting a benchmark for excellence and professionalism.",
+      "quantityUnit": "Teams",
+      "values": [
+        { "note": "per award" }
+      ]
+    },
+    "top-project-leader": {
+      "navLabel": "Top Project Leader",
+      "title": "Top Project Leader",
+      "description": "The Top Project Leader award honours outstanding project managers — those who embody solid management capabilities, powerful inspirational ability, and an \"Aim High – Be Agile\" mindset in every challenge and context. Under their guidance, team members not only overcome obstacles and achieve set goals together, but also keep the flame of enthusiasm alive, the Wasshoi spirit burning, and grow to become a more refined and fulfilled version of themselves.",
+      "quantityUnit": "Individuals",
+      "values": [
+        { "note": "per award" }
+      ]
+    },
+    "best-manager": {
+      "navLabel": "Best Manager",
+      "title": "Best Manager",
+      "description": "The Best Manager award honours exemplary leaders — those who have guided their teams to produce results that exceed expectations, with a notable impact on business efficiency and the sustainable development of the organisation. Under their leadership, the team consistently conquers and masters every goal through multi-tasking capability, effective collaboration, and flexible application of technology in the digital era. They inspire the collective to become confident and energised, ready to embrace — and even spearhead — revolutionary change.",
+      "quantityUnit": "Individual",
+      "values": [
+        { "note": "" }
+      ]
+    },
+    "signature-2025-creator": {
+      "navLabel": "Signature 2025 Creator",
+      "title": "Signature 2025 - Creator",
+      "description": "The Signature award honours individuals or teams who embody the distinctive spirit that Sun* aspires to in each era. In 2025, the Signature award celebrates the Creator — individuals or teams with a proactive and sharp mindset who always see opportunity in challenge and pioneer action. They are perceptive about problems, quickly identify them, and propose practical solutions that deliver clear value to projects, clients, or the organisation. With a creative mindset and the signature \"Creator\" spirit of Sun*, they not only respond positively to change but also proactively drive improvements, helping to shape new standards for how Sun* people create value.",
+      "quantityUnit": "Individual or team",
+      "values": [
+        { "note": "for the individual award" },
+        { "note": "for the team award" }
+      ]
+    },
+    "mvp": {
+      "navLabel": "MVP",
+      "title": "MVP (Most Valuable Person)",
+      "description": "The MVP award honours the most outstanding individual of the year — the defining face representing the entire Sun* collective. They have demonstrated exceptional capabilities, unwavering dedication, and far-reaching influence, leaving a powerful mark on Sun*'s journey throughout the year. Not only outstanding for their performance and work results, they are also a source of inspiration that radiates outward — through their thinking, actions, and positive influence on the team. MVP is someone who embodies all the qualities of an outstanding Sun* person, while also carrying a great responsibility: to become the representative model for the people and spirit of Sun*, helping to lead the collective towards new heights.",
+      "quantityUnit": "Individual",
+      "values": [
+        { "note": "" }
+      ]
+    }
+  }
+}

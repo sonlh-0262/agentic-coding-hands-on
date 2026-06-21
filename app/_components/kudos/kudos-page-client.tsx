@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import SiteHeader from "@/app/_components/home/site-header";
 import SiteFooter from "@/app/_components/home/site-footer";
 import WidgetButton from "@/app/_components/home/widget-button";
@@ -27,6 +28,7 @@ export default function KudosPageClient({
   feed,
   hashtagOptions,
 }: KudosPageClientProps) {
+  const t = useTranslations("kudos");
   const [open, setOpen] = useState(false);
 
   const handleSearchRecipients = async (
@@ -69,7 +71,7 @@ export default function KudosPageClient({
               color: "rgba(255, 234, 158, 1)",
             }}
           >
-            Sun* Kudos
+            {t("page.title")}
           </h1>
 
           <button
@@ -87,7 +89,7 @@ export default function KudosPageClient({
               cursor: "pointer",
             }}
           >
-            Viết Kudo
+            {t("page.writeKudo")}
           </button>
         </div>
 
@@ -99,7 +101,7 @@ export default function KudosPageClient({
               color: "rgba(255, 255, 255, 0.7)",
             }}
           >
-            Chưa có kudo nào. Hãy là người đầu tiên gửi lời cám ơn!
+            {t("page.emptyFeed")}
           </p>
         ) : (
           <div

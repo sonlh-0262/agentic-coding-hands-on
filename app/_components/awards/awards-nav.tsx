@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { AWARDS_NAV_ITEMS } from "./awards-data";
+import { useTranslations } from "next-intl";
+import { AWARD_SLUGS } from "./awards-data";
+import type { AwardSlug } from "./awards-data";
 
 interface AwardsNavProps {
   activeSlug: string;
@@ -16,6 +18,8 @@ interface AwardsNavProps {
  * Clicking smooth-scrolls to the matching section anchor.
  */
 export default function AwardsNav({ activeSlug, onNavClick }: AwardsNavProps) {
+  const t = useTranslations("awards");
+
   return (
     <nav
       className="sticky flex flex-col"
@@ -26,15 +30,15 @@ export default function AwardsNav({ activeSlug, onNavClick }: AwardsNavProps) {
         flexShrink: 0,
         alignSelf: "flex-start",
       }}
-      aria-label="Awards navigation"
+      aria-label={t("nav.ariaLabel")}
     >
-      {AWARDS_NAV_ITEMS.map((item) => {
-        const isActive = activeSlug === item.slug;
+      {AWARD_SLUGS.map((slug) => {
+        const isActive = activeSlug === slug;
         return (
           <button
-            key={item.slug}
+            key={slug}
             type="button"
-            onClick={() => onNavClick(item.slug)}
+            onClick={() => onNavClick(slug)}
             className="flex items-center text-left transition-colors duration-200"
             style={{
               gap: "4px",
@@ -71,7 +75,7 @@ export default function AwardsNav({ activeSlug, onNavClick }: AwardsNavProps) {
                     : "none",
                 }}
               >
-                {item.navLabel}
+                {t(`items.${slug as AwardSlug}.navLabel`)}
               </span>
             </span>
           </button>

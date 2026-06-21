@@ -1,15 +1,20 @@
 import Image from "next/image";
 
 interface AwardQuantityRowProps {
+  /** Translated label, e.g. "Số lượng giải thưởng:" / "Number of awards:" */
+  label: string;
   quantity: string;
+  /** Translated unit, e.g. "Cá nhân" / "Individuals" */
   quantityUnit: string;
 }
 
 /**
- * AwardQuantityRow — the "Số lượng giải thưởng:" row of an award section.
+ * AwardQuantityRow — the quantity row of an award section.
  * Diamond icon + gold label + large quantity + unit.
+ * Receives all display strings as props (translated by the parent).
  */
 export default function AwardQuantityRow({
+  label,
   quantity,
   quantityUnit,
 }: AwardQuantityRowProps) {
@@ -32,7 +37,7 @@ export default function AwardQuantityRow({
           color: "rgba(255, 234, 158, 1)",
         }}
       >
-        Số lượng giải thưởng:
+        {label}
       </span>
       <span
         style={{

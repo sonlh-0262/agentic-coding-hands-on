@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { AwardCard as AwardCardData } from "./home-data";
 
 interface AwardCardProps {
@@ -13,12 +16,16 @@ interface AwardCardProps {
  * Hover: lift + glow transition.
  */
 export default function AwardCard({ award }: AwardCardProps) {
+  const t = useTranslations("home");
+  const tCommon = useTranslations("common");
+  const cardTitle = t(`awards.cards.${award.cardKey}.title`);
+  const cardDescription = t(`awards.cards.${award.cardKey}.description`);
   return (
     <Link
       href={`/he-thong-giai#${award.slug}`}
       className="group flex flex-col no-underline"
       style={{ gap: "24px", width: "336px" }}
-      aria-label={`${award.title} — Chi tiết`}
+      aria-label={`${cardTitle} ${t("awards.cardAriaLabelSuffix")}`}
     >
       {/* Award image card */}
       <div
@@ -50,7 +57,7 @@ export default function AwardCard({ award }: AwardCardProps) {
         >
           <Image
             src={award.nameImage}
-            alt={award.title}
+            alt={cardTitle}
             width={award.nameImageWidth}
             height={award.nameImageHeight}
             className="object-contain"
@@ -71,7 +78,7 @@ export default function AwardCard({ award }: AwardCardProps) {
             margin: 0,
           }}
         >
-          {award.title}
+          {cardTitle}
         </h3>
 
         {/* Description — 2 line clamp */}
@@ -91,10 +98,10 @@ export default function AwardCard({ award }: AwardCardProps) {
             margin: 0,
           }}
         >
-          {award.description}
+          {cardDescription}
         </p>
 
-        {/* Chi tiết link */}
+        {/* Chi tiết link — uses common.details */}
         <div
           className="flex items-center mt-2 font-bold text-white transition-colors duration-200 group-hover:text-[#FFEA9E]"
           style={{ gap: "4px" }}
@@ -107,7 +114,7 @@ export default function AwardCard({ award }: AwardCardProps) {
               letterSpacing: "0.15px",
             }}
           >
-            Chi tiết
+            {tCommon("details")}
           </span>
           <Image
             src="/home/icon-arrow.svg"

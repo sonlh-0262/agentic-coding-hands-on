@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface NotificationButtonProps {
   unreadCount?: number;
@@ -18,6 +19,7 @@ export default function NotificationButton({
   const [open, setOpen] = useState(false);
   const hasUnread = unreadCount > 0;
   const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("home");
 
   // Close on Escape or click outside.
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function NotificationButton({
     <div className="relative" ref={containerRef}>
       <button
         type="button"
-        aria-label={`Notifications${hasUnread ? ` (${unreadCount} unread)` : ""}`}
+        aria-label={hasUnread ? t("notifications.buttonLabelUnread", { count: unreadCount }) : t("notifications.buttonLabel")}
         onClick={() => setOpen((v) => !v)}
         className="relative flex items-center justify-center rounded-[4px] transition-[background-color] duration-200 hover:bg-white/[0.08]"
         style={{ width: "40px", height: "40px", padding: "10px" }}
@@ -80,9 +82,9 @@ export default function NotificationButton({
             textAlign: "center",
           }}
           role="dialog"
-          aria-label="Notifications"
+          aria-label={t("notifications.panelAriaLabel")}
         >
-          Chưa có thông báo mới
+          {t("notifications.empty")}
         </div>
       )}
     </div>

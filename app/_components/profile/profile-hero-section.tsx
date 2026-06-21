@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * profile-hero-section.tsx
  *
@@ -10,6 +12,7 @@
  */
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { IconSlot, UserBadge } from "./profile-mock-data";
 
 interface ProfileHeroSectionProps {
@@ -21,7 +24,7 @@ interface ProfileHeroSectionProps {
 }
 
 /** Gray placeholder circle for a locked badge slot */
-function BadgeSlotPlaceholder() {
+function BadgeSlotPlaceholder({ label }: { label: string }) {
   return (
     <div
       style={{
@@ -32,7 +35,7 @@ function BadgeSlotPlaceholder() {
         background: "#323231",
         flexShrink: 0,
       }}
-      aria-label="Huy hiệu chưa mở khóa"
+      aria-label={label}
     />
   );
 }
@@ -44,6 +47,14 @@ export default function ProfileHeroSection({
   title,
   iconSlots,
 }: ProfileHeroSectionProps) {
+  const t = useTranslations("profile");
+  // Resolve badge title: if a catalog key exists for it, use it; otherwise show as-is
+  const badgeTitleMap: Record<string, string> = {
+    legendHero: t("badge.legendHero"),
+    superHero: t("badge.superHero"),
+  };
+  const titleLabel = badgeTitleMap[title] ?? title;
+
   return (
     <section
       style={{
@@ -72,7 +83,7 @@ export default function ProfileHeroSection({
         {avatarSrc ? (
           <Image
             src={avatarSrc}
-            alt={`Ảnh đại diện của ${name}`}
+            alt={t("hero.avatarAlt", { name })}
             width={200}
             height={200}
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
@@ -174,7 +185,7 @@ export default function ProfileHeroSection({
               background: "rgba(0,0,0,0.2)",
             }}
           >
-            {title}
+            {titleLabel}
           </span>
         </div>
       </div>
@@ -211,7 +222,7 @@ export default function ProfileHeroSection({
               >
                 <Image
                   src={slot.imageSrc}
-                  alt={slot.alt ?? `Huy hiệu ${slot.index}`}
+                  alt={slot.alt ?? t("hero.badgeAlt", { index: slot.index })}
                   width={64}
                   height={64}
                   style={{ objectFit: "cover", width: "100%", height: "100%" }}
@@ -219,7 +230,7 @@ export default function ProfileHeroSection({
                 />
               </div>
             ) : (
-              <BadgeSlotPlaceholder key={slot.index} />
+              <BadgeSlotPlaceholder key={slot.index} label={t("hero.badgeLocked")} />
             )
           )}
         </div>
@@ -233,7 +244,7 @@ export default function ProfileHeroSection({
             color: "#FFF",
           }}
         >
-          Bộ sưu tập icon của tôi
+          {t("hero.iconCollectionTitle")}
         </p>
       </div>
     </section>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export interface HashtagChip {
   id: string;
@@ -30,6 +31,7 @@ export default function KudoHashtagField({
   onRemove,
   maxCount = 5,
 }: KudoHashtagFieldProps) {
+  const t = useTranslations("kudos");
   const canAdd = chips.length < maxCount;
   const [open, setOpen] = useState(false);
 
@@ -65,7 +67,7 @@ export default function KudoHashtagField({
             color: "rgba(0, 16, 26, 1)",
           }}
         >
-          Hashtag
+          {t("hashtag.label")}
         </span>
         <span
           style={{
@@ -97,7 +99,7 @@ export default function KudoHashtagField({
           <div style={{ position: "relative" }}>
           <button
             type="button"
-            aria-label="Thêm hashtag"
+            aria-label={t("hashtag.addAriaLabel")}
             aria-haspopup="listbox"
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
@@ -145,7 +147,7 @@ export default function KudoHashtagField({
                   color: "#999",
                 }}
               >
-                Hashtag
+                {t("hashtag.label")}
               </span>
               <span
                 style={{
@@ -157,14 +159,14 @@ export default function KudoHashtagField({
                   color: "#999",
                 }}
               >
-                Tối đa {maxCount}
+                {t("hashtag.maxCount", { count: maxCount })}
               </span>
             </div>
           </button>
           {open && (
             <ul
               role="listbox"
-              aria-label="Chọn hashtag"
+              aria-label={t("hashtag.dropdownAriaLabel")}
               style={{
                 position: "absolute",
                 top: "calc(100% + 4px)",
@@ -191,7 +193,7 @@ export default function KudoHashtagField({
                     color: "#999",
                   }}
                 >
-                  Hết hashtag
+                  {t("hashtag.noOptions")}
                 </li>
               ) : (
                 options.map((opt) => (
@@ -256,7 +258,7 @@ export default function KudoHashtagField({
             </span>
             <button
               type="button"
-              aria-label={`Xóa hashtag ${chip.label}`}
+              aria-label={t("hashtag.removeAriaLabel", { label: chip.label })}
               onClick={() => onRemove(chip.id)}
               style={{
                 display: "flex",
@@ -274,7 +276,7 @@ export default function KudoHashtagField({
             >
               <Image
                 src="/viet-kudo/Close_Tiny.svg"
-                alt={`Xóa ${chip.label}`}
+                alt={t("hashtag.removeAlt", { label: chip.label })}
                 width={17}
                 height={17}
               />

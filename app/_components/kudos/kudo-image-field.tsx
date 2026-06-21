@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export interface ImageItem {
   id: string;
@@ -28,6 +29,7 @@ export default function KudoImageField({
   onRemove,
   maxCount = 5,
 }: KudoImageFieldProps) {
+  const t = useTranslations("kudos");
   const canAdd = images.length < maxCount;
 
   return (
@@ -61,7 +63,7 @@ export default function KudoImageField({
             color: "rgba(0, 16, 26, 1)",
           }}
         >
-          Image
+          {t("image.label")}
         </span>
       </div>
 
@@ -94,7 +96,7 @@ export default function KudoImageField({
             {/* Thumbnail */}
             <Image
               src={img.previewUrl}
-              alt="Ảnh đính kèm"
+              alt={t("image.thumbnailAlt")}
               fill
               style={{
                 objectFit: "cover",
@@ -105,7 +107,7 @@ export default function KudoImageField({
             {/* Remove button */}
             <button
               type="button"
-              aria-label="Xóa ảnh"
+              aria-label={t("image.removeAriaLabel")}
               onClick={() => onRemove(img.id)}
               style={{
                 position: "absolute",
@@ -126,7 +128,7 @@ export default function KudoImageField({
             >
               <Image
                 src="/viet-kudo/Close_Tiny.svg"
-                alt="Xóa"
+                alt={t("image.removeAlt")}
                 width={17}
                 height={17}
               />
@@ -138,7 +140,7 @@ export default function KudoImageField({
         {canAdd && (
           <button
             type="button"
-            aria-label="Thêm ảnh"
+            aria-label={t("image.addAriaLabel")}
             onClick={onAdd}
             style={{
               display: "flex",
@@ -184,7 +186,7 @@ export default function KudoImageField({
                   color: "#999",
                 }}
               >
-                Image
+                {t("image.label")}
               </span>
               <span
                 style={{
@@ -196,7 +198,7 @@ export default function KudoImageField({
                   color: "#999",
                 }}
               >
-                Tối đa {maxCount}
+                {t("image.maxCount", { count: maxCount })}
               </span>
             </div>
           </button>

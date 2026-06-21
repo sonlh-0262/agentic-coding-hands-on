@@ -85,9 +85,11 @@ export async function listRecentKudos(limit = 20): Promise<KudoFeedItem[]> {
   return ((data ?? []) as unknown as KudoRow[]).map((row) => {
     const sender = one(row.sender);
     const recipient = one(row.recipient);
-    const authorName = row.is_anonymous
-      ? row.anonymous_name?.trim() || "Ẩn danh"
-      : sender?.full_name || "Ẩn danh";
+    // Null signals "anonymous with no chosen name" — consumers render a
+    // translated fallback (kudos.feed.anonymous) rather than a hardcoded string.
+    const authorName: string | null = row.is_anonymous
+      ? row.anonymous_name?.trim() || null
+      : sender?.full_name || null;
     return {
       id: row.id,
       title: row.title ?? "",

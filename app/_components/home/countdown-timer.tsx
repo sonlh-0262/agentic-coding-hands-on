@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { padded } from "@/lib/event/countdown";
 import type { Remaining } from "@/lib/event/countdown";
 
@@ -84,17 +87,18 @@ function CountdownTile({ value, label }: TileProps) {
  */
 export default function CountdownTimer({ remaining }: CountdownTimerProps) {
   const { days, hours, minutes } = remaining;
+  const t = useTranslations("home");
 
   return (
     <div
       className="flex flex-row items-center"
       style={{ gap: "40px", width: "429px", height: "128px" }}
       role="timer"
-      aria-label="Countdown to event"
+      aria-label={t("hero.countdownAriaLabel")}
     >
-      <CountdownTile value={padded(days)} label="DAYS" />
-      <CountdownTile value={padded(hours)} label="HOURS" />
-      <CountdownTile value={padded(minutes)} label="MINUTES" />
+      <CountdownTile value={padded(days)} label={t("countdown.days")} />
+      <CountdownTile value={padded(hours)} label={t("countdown.hours")} />
+      <CountdownTile value={padded(minutes)} label={t("countdown.minutes")} />
     </div>
   );
 }

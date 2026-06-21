@@ -1,0 +1,85 @@
+{
+  "page": {
+    "title": "Sun* Kudos",
+    "writeKudo": "Viết Kudo",
+    "emptyFeed": "Chưa có kudo nào. Hãy là người đầu tiên gửi lời cám ơn!"
+  },
+  "modal": {
+    "title": "Gửi lời cám ơn và ghi nhận đến đồng đội",
+    "messagePlaceholder": "Hãy gửi gắm lời cám ơn và ghi nhận đến đồng đội tại đây nhé!",
+    "messageHint": "Bạn có thể \"@ + tên\" để nhắc tới đồng nghiệp khác",
+    "cancel": "Hủy",
+    "submit": "Gửi",
+    "submitting": "Đang gửi...",
+    "invalidImageType": "Định dạng tệp không hợp lệ (chỉ chấp nhận ảnh)"
+  },
+  "recipient": {
+    "label": "Người nhận",
+    "searchPlaceholder": "Tìm kiếm",
+    "searchAriaLabel": "Tìm kiếm người nhận",
+    "listAriaLabel": "Danh sách người nhận",
+    "noResults": "Không có kết quả"
+  },
+  "titleField": {
+    "label": "Danh hiệu",
+    "placeholder": "Dành tặng một danh hiệu cho đồng đội",
+    "helperText": "Ví dụ: Người truyền động lực cho tôi.\nDanh hiệu sẽ hiển thị làm tiêu đề Kudos của bạn."
+  },
+  "message": {
+    "ariaLabel": "Nội dung kudo",
+    "linkPrompt": "Nhập URL liên kết:",
+    "invalidUrl": "URL không hợp lệ (chỉ chấp nhận http, https, mailto)."
+  },
+  "hashtag": {
+    "label": "Hashtag",
+    "maxCount": "Tối đa {count}",
+    "addAriaLabel": "Thêm hashtag",
+    "dropdownAriaLabel": "Chọn hashtag",
+    "noOptions": "Hết hashtag",
+    "removeAriaLabel": "Xóa hashtag {label}",
+    "removeAlt": "Xóa {label}"
+  },
+  "image": {
+    "label": "Image",
+    "maxCount": "Tối đa {count}",
+    "addAriaLabel": "Thêm ảnh",
+    "removeAriaLabel": "Xóa ảnh",
+    "removeAlt": "Xóa",
+    "thumbnailAlt": "Ảnh đính kèm"
+  },
+  "anonymous": {
+    "checkboxAriaLabel": "Gửi lời cám ơn và ghi nhận ẩn danh",
+    "label": "Gửi lời cám ơn và ghi nhận ẩn danh",
+    "namePlaceholder": "Tên hiển thị ẩn danh (tuỳ chọn)"
+  },
+  "toolbar": {
+    "ariaLabel": "Text formatting",
+    "bold": "Bold",
+    "italic": "Italic",
+    "strikethrough": "Strikethrough",
+    "numberList": "Number list",
+    "link": "Link",
+    "quote": "Quote"
+  },
+  "mention": {
+    "dropdownAriaLabel": "Gợi ý nhắc tên"
+  },
+  "feed": {
+    "from": "Từ",
+    "to": "đến",
+    "anonymous": "Ẩn danh"
+  },
+  "errors": {
+    "recipientRequired": "Người nhận không được để trống",
+    "titleRequired": "Danh hiệu không được để trống",
+    "messageRequired": "Nội dung không được để trống",
+    "hashtagRequired": "Hashtag không được để trống",
+    "hashtagMax": "Tối đa {max} hashtag",
+    "imageMax": "Tối đa {max} ảnh",
+    "unauthenticated": "Bạn cần đăng nhập",
+    "fileNotFound": "Không tìm thấy tệp",
+    "invalidImageType": "Định dạng tệp không hợp lệ",
+    "invalidImage": "Ảnh không hợp lệ",
+    "sendFailed": "Không thể gửi kudo"
+  }
+}

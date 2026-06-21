@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 /**
  * WidgetButton — fixed bottom-right yellow pill.
@@ -11,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 export default function WidgetButton() {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("home");
 
   // Close on Escape or click outside.
   useEffect(() => {
@@ -45,7 +47,7 @@ export default function WidgetButton() {
             border: "1px solid #2E3940",
           }}
           role="menu"
-          aria-label="Quick actions"
+          aria-label={t("widgetMenu.quickActionsAriaLabel")}
         >
           <button
             type="button"
@@ -54,7 +56,7 @@ export default function WidgetButton() {
             style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
             onClick={() => setOpen(false)}
           >
-            Viết Kudos
+            {t("widgetMenu.writeKudos")}
           </button>
           <button
             type="button"
@@ -63,7 +65,7 @@ export default function WidgetButton() {
             style={{ fontFamily: "var(--font-montserrat), sans-serif" }}
             onClick={() => setOpen(false)}
           >
-            Xem thể lệ SAA
+            {t("widgetMenu.viewSaaRules")}
           </button>
         </div>
       )}
@@ -71,7 +73,7 @@ export default function WidgetButton() {
       {/* Pill button */}
       <button
         type="button"
-        aria-label="Quick actions"
+        aria-label={t("widgetMenu.quickActionsAriaLabel")}
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}

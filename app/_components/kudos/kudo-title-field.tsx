@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface KudoTitleFieldProps {
   value: string;
@@ -13,6 +14,8 @@ interface KudoTitleFieldProps {
  * Helper text below: "Ví dụ: Người truyền động lực cho tôi. ..."
  */
 export default function KudoTitleField({ value, onChange }: KudoTitleFieldProps) {
+  const t = useTranslations("kudos");
+
   return (
     <div
       style={{
@@ -52,7 +55,7 @@ export default function KudoTitleField({ value, onChange }: KudoTitleFieldProps)
               color: "rgba(0, 16, 26, 1)",
             }}
           >
-            Danh hiệu
+            {t("titleField.label")}
           </span>
           <span
             style={{
@@ -87,7 +90,7 @@ export default function KudoTitleField({ value, onChange }: KudoTitleFieldProps)
               type="text"
               value={value}
               onChange={(e) => onChange(e.target.value)}
-              placeholder="Dành tặng một danh hiệu cho đồng đội"
+              placeholder={t("titleField.placeholder")}
               style={{
                 flex: 1,
                 border: "none",
@@ -132,7 +135,7 @@ export default function KudoTitleField({ value, onChange }: KudoTitleFieldProps)
             whiteSpace: "pre-line",
           }}
         >
-          {`Ví dụ: Người truyền động lực cho tôi.\nDanh hiệu sẽ hiển thị làm tiêu đề Kudos của bạn.`}
+          {t("titleField.helperText")}
         </p>
       </div>
     </div>

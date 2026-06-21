@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export interface GoogleLoginButtonProps {
   onClick?: () => void;
@@ -11,6 +14,7 @@ export function GoogleLoginButton({
   loading = false,
   disabled = false,
 }: GoogleLoginButtonProps) {
+  const t = useTranslations("login");
   const isDisabled = disabled || loading;
 
   return (
@@ -18,7 +22,7 @@ export function GoogleLoginButton({
       type="button"
       onClick={onClick}
       disabled={isDisabled}
-      aria-label="Login with Google"
+      aria-label={t("googleLoginButton.ariaLabel")}
       className="
         flex flex-row items-center gap-2
         w-[305px] h-[60px] px-6 py-4 rounded-[8px]
@@ -36,7 +40,7 @@ export function GoogleLoginButton({
           color: "rgba(0, 16, 26, 1)",
         }}
       >
-        LOGIN With Google{" "}
+        {t("googleLoginButton.label")}{" "}
       </span>
 
       {/* Icon: spinner during loading, Google icon otherwise */}

@@ -1,0 +1,24 @@
+{
+  "header": {
+    "homepageAriaLabel": "Go to homepage",
+    "switchLanguageAriaLabel": "Switch language",
+    "flagVnAlt": "Vietnamese flag",
+    "expandAlt": "Expand",
+    "logoAlt": "SAA 2025 logo"
+  },
+  "hero": {
+    "welcomeLine1": "Start your journey with SAA 2025.",
+    "welcomeLine2": "Log in to explore!",
+    "logoAlt": "Root Further"
+  },
+  "googleLoginButton": {
+    "label": "LOGIN With Google",
+    "ariaLabel": "Login with Google"
+  },
+  "error": {
+    "loginFailed": "Login failed. Please try again."
+  },
+  "footer": {
+    "ariaLabel": "Page footer"
+  }
+}

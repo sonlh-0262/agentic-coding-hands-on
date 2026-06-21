@@ -1,19 +1,34 @@
 import Image from "next/image";
-import type { AwardValue } from "./awards-data";
+
+export interface AwardValueDisplay {
+  /** Monetary amount string — structural, not translated (e.g. "7.000.000 VNĐ"). */
+  amount: string;
+  /** Translated note string (e.g. "cho mỗi giải thưởng" / "per award"). */
+  note: string;
+}
 
 interface AwardValueBlockProps {
-  values: AwardValue[];
+  /** Translated label, e.g. "Giá trị giải thưởng:" / "Award value:" */
+  label: string;
+  /** Translated "Or" separator, e.g. "Hoặc" / "Or" */
+  orLabel: string;
+  values: AwardValueDisplay[];
 }
 
 /**
- * AwardValueBlock — the "Giá trị giải thưởng:" block of an award section.
+ * AwardValueBlock — the award value block of an award section.
  * Renders the label row plus one or two value entries (Signature 2025 has two:
- * cá nhân / tập thể, separated by a "Hoặc" divider).
+ * individual / collective, separated by an "Or" divider).
+ * Receives all display strings as props (translated by the parent).
  */
-export default function AwardValueBlock({ values }: AwardValueBlockProps) {
+export default function AwardValueBlock({
+  label,
+  orLabel,
+  values,
+}: AwardValueBlockProps) {
   return (
     <div className="flex flex-col" style={{ gap: "16px" }}>
-      {/* "Giá trị giải thưởng:" label row */}
+      {/* Label row */}
       <div className="flex items-center" style={{ gap: "16px" }}>
         <Image
           src="/awards/icon-license.svg"
@@ -32,7 +47,7 @@ export default function AwardValueBlock({ values }: AwardValueBlockProps) {
             color: "rgba(255, 234, 158, 1)",
           }}
         >
-          Giá trị giải thưởng:
+          {label}
         </span>
       </div>
 
@@ -67,7 +82,7 @@ export default function AwardValueBlock({ values }: AwardValueBlockProps) {
             </span>
           ) : null}
 
-          {/* "Hoặc" separator between Signature values */}
+          {/* Separator between Signature values */}
           {idx < values.length - 1 && (
             <div
               className="flex items-center"
@@ -84,7 +99,7 @@ export default function AwardValueBlock({ values }: AwardValueBlockProps) {
                   color: "rgba(46, 57, 64, 1)",
                 }}
               >
-                Hoặc
+                {orLabel}
               </span>
               <hr
                 style={{
