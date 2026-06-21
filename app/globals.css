@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Digital Numbers — LED/7-segment display font used by the prelaunch countdown */
+@font-face {
+  font-family: "Digital Numbers";
+  src: url("/fonts/digital-numbers.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
